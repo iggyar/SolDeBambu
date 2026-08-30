@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════════
+   SISTEMA DE DISEÑO — SOL DE BAMBÚ
+   Cálido natural. La paleta no se inventó: está muestreada de las
+   fotos de la propiedad (el OSB terracota de las cabañas, el verde
+   del techo y el follaje, la arena del camino, el azul de la piscina).
+   Una sola acción primaria — terracota. El verde WhatsApp se reserva
+   exclusivamente para el botón de WhatsApp, nunca decora.
+   ═══════════════════════════════════════════════════════════════════ */
+
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+
+  /* — Acción: el naranja del OSB de las cabañas — */
+  --color-terracota: #B85A2E;
+  --color-terracota-hover: #CC6835;
+  --color-terracota-tenue: #F3E2D6;
+
+  /* — Bambú: techo verde y follaje. Superficies oscuras. — */
+  --color-bambu: #2F5D3A;
+  --color-bambu-hondo: #1F3F27;
+  --color-bambu-claro: #4E8055;
+  --color-cesped: #7FA55C;
+
+  /* — Frío único: la piscina. Solo badges de ahorro e íconos de agua. — */
+  --color-piscina: #2E90AE;
+
+  /* — Tierra y arena: fondos — */
+  --color-arena: #F7F2E8;
+  --color-arena-2: #EDE3D2;
+  --color-arena-3: #E0D2BB;
+  --color-madera: #6B4A2F;
+
+  /* — Tinta: nunca negro puro, siempre marrón muy oscuro — */
+  --color-tinta: #2A241D;
+  --color-tinta-2: #6B6257;
+  --color-tinta-3: #948A7C;
+
+  --color-whatsapp: #25D366;
+  --color-whatsapp-hover: #1FBA59;
+
+  /* — Sombras cálidas: el negro puro ensucia sobre fondo arena — */
+  --shadow-suave: 0 1px 2px rgba(42, 36, 29, 0.06), 0 8px 24px rgba(42, 36, 29, 0.08);
+  --shadow-media: 0 2px 4px rgba(42, 36, 29, 0.08), 0 16px 40px rgba(42, 36, 29, 0.12);
+  --shadow-alta: 0 4px 8px rgba(42, 36, 29, 0.10), 0 28px 64px rgba(42, 36, 29, 0.18);
+
+  --ease-suave: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Compensa la nav fija cuando se salta a un ancla */
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-arena);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  /* Los titulares llevan la serif con óptica alta y remates blandos:
+     es lo que separa "refugio de campo" de "landing de software". */
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-variation-settings: 'SOFT' 40, 'WONK' 1, 'opsz' 96;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background-color: var(--color-terracota);
+    color: var(--color-arena);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-terracota);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer utilities {
+  /* Ken Burns del hero: un acercamiento tan lento que no se percibe como
+     animación, solo hace que la foto "respire". */
+  @keyframes deriva-lenta {
+    from { transform: scale(1.06) translate3d(0, 0, 0); }
+    to   { transform: scale(1.16) translate3d(-1.2%, -1.2%, 0); }
+  }
+  .anima-deriva {
+    animation: deriva-lenta 26s ease-in-out infinite alternate;
+  }
+
+  @keyframes latido-suave {
+    0%, 100% { transform: scale(1); opacity: 0.55; }
+    50%      { transform: scale(1.5); opacity: 0; }
+  }
+  .anima-latido { animation: latido-suave 2.4s ease-out infinite; }
+
+  @keyframes rebote-flecha {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(6px); }
+  }
+  .anima-flecha { animation: rebote-flecha 2s ease-in-out infinite; }
+
+  /* Grano sutil sobre las fotos a sangre: mata el banding de los cielos
+     degradados y le da textura de impreso. */
+  .textura-grano::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.14;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23r)'/%3E%3C/svg%3E");
+  }
+
+  .sin-scrollbar::-webkit-scrollbar { display: none; }
+  .sin-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+}
+
+/* Quien pide menos movimiento recibe la página entera, quieta. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

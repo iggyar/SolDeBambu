@@ -1,0 +1,62 @@
+/**
+ * ★ ESTE ES EL ÚNICO ARCHIVO QUE HAY QUE EDITAR PARA PONER LA WEB EN MARCHA.
+ *
+ * Todo lo que cambia con el negocio vive acá: teléfono, redes, ubicación.
+ * Ningún componente tiene datos escritos a mano.
+ */
+
+export const NEGOCIO = {
+  nombre: 'Sol de Bambú',
+
+  /**
+   * Número de WhatsApp de reservas, en formato internacional: solo dígitos,
+   * sin "+" ni espacios. El 51 del principio es el código de Perú.
+   * Todos los botones de la página apuntan acá.
+   */
+  whatsapp: '51965706432',
+  whatsappEsPlaceholder: false,
+
+  /** Cómo se muestra el número en el footer. Actualizar junto con el de arriba. */
+  telefonoVisible: '+51 965 706 432',
+
+  ubicacion: {
+    distrito: 'Mala',
+    provincia: 'Cañete',
+    region: 'Lima',
+    referencia: 'Km 86 de la Panamericana Sur',
+    /** Versión corta, para el sobretítulo del hero, donde el espacio es de una línea. */
+    referenciaCorta: 'Km 86 Panamericana Sur',
+    desdeLima: '1 hora y 15 minutos',
+    coordenadas: {lat: -12.643576, lng: -76.628338},
+    /** Link corto de la ficha de Google Maps de la propiedad. */
+    googleMaps: 'https://maps.app.goo.gl/i6i8R6WYBqrAnaMS7',
+  },
+
+  horarios: {
+    ingreso: '11:00 a. m.',
+    salida: '6:00 p. m.',
+  },
+
+  capacidad: {
+    cabanas: 3,
+    porCabana: 7,
+    total: 20,
+  },
+
+  /** Precio ancla que se repite en el hero y en la barra móvil. */
+  precioDesde: 530,
+
+  reseñasGoogle: {
+    /** ⚠️ PENDIENTE de confirmar con la ficha real. */
+    puntaje: 5.0,
+    total: 5,
+    enlace: 'https://maps.app.goo.gl/i6i8R6WYBqrAnaMS7',
+  },
+
+  /** ⚠️ PENDIENTE — poner en null las que no existan; el footer las oculta solo. */
+  redes: {
+    instagram: null as string | null,
+    tiktok: null as string | null,
+    facebook: null as string | null,
+  },
+} as const;
