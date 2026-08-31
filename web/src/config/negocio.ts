@@ -46,6 +46,26 @@ export const NEGOCIO = {
   /** Precio ancla que se repite en el hero y en la barra móvil. */
   precioDesde: 530,
 
+  /**
+   * La foto protagonista del hero, y su máscara de oclusión.
+   *
+   * Para cambiarla: deja la foto nueva en la carpeta SolBambu, agrégala al
+   * MAPA de scripts/optimizar-fotos.mjs, y corre
+   *   npm run fotos && npm run mascara -- <nombre-nuevo>
+   * Después cambia el nombre acá. Nada más.
+   */
+  hero: {
+    foto: 'piscina-quincho',
+    alt: 'La piscina de Sol de Bambú al atardecer, con los toldos de madera, el comedor techado y los cerros de Mala al fondo',
+    /**
+     * Dónde cae la línea del horizonte de esa foto, en fracción de alto.
+     * Es lo que decide cuánto se hunde el wordmark detrás del paisaje: si
+     * cambias la foto del hero, mira la revisión que deja el generador de
+     * máscara y ajusta este número.
+     */
+    horizonte: 0.47,
+  },
+
   reseñasGoogle: {
     /** ⚠️ PENDIENTE de confirmar con la ficha real. */
     puntaje: 5.0,

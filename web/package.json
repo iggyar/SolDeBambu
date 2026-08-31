@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "tsc --noEmit",
-    "fotos": "node scripts/optimizar-fotos.mjs"
+    "fotos": "node scripts/optimizar-fotos.mjs",
+    "mascara": "node scripts/generar-mascara.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.546.0",

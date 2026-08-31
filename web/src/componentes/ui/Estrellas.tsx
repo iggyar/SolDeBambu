@@ -8,7 +8,7 @@ export function Estrellas({cantidad = 5, tamano = 14}: {cantidad?: number; taman
           key={i}
           size={tamano}
           strokeWidth={0}
-          className={i < cantidad ? 'fill-[#F2A93B]' : 'fill-tinta-3/30'}
+          className={i < cantidad ? 'fill-[#F2A93B]' : 'fill-bruma-3/30'}
         />
       ))}
     </div>

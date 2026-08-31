@@ -10,7 +10,7 @@ type Props = {
 /** Ancho de contenido y ritmo vertical, iguales en toda la página. */
 export function Seccion({id, children, className = ''}: Props) {
   return (
-    <section id={id} className={`px-5 py-20 sm:px-8 md:py-28 ${className}`}>
+    <section id={id} className={`px-5 py-24 sm:px-8 md:py-32 ${className}`}>
       <div className="mx-auto w-full max-w-6xl">{children}</div>
     </section>
   );
@@ -21,50 +21,26 @@ type EncabezadoProps = {
   titulo: ReactNode;
   bajada?: ReactNode;
   centrado?: boolean;
-  oscuro?: boolean;
 };
 
-export function Encabezado({
-  sobretitulo,
-  titulo,
-  bajada,
-  centrado = false,
-  oscuro = false,
-}: EncabezadoProps) {
+export function Encabezado({sobretitulo, titulo, bajada, centrado = false}: EncabezadoProps) {
   return (
     <Aparece className={`max-w-2xl ${centrado ? 'mx-auto text-center' : ''}`}>
-      {sobretitulo && (
-        <p
-          className={`mb-3 text-xs font-semibold tracking-[0.18em] uppercase ${
-            oscuro ? 'text-cesped' : 'text-terracota'
-          }`}
-        >
-          {sobretitulo}
-        </p>
-      )}
-      <h2
-        className={`text-3xl leading-[1.12] sm:text-4xl md:text-[2.9rem] ${
-          oscuro ? 'text-arena' : 'text-tinta'
-        }`}
-      >
+      {sobretitulo && <p className="condensada text-musgo mb-4 text-[0.72rem]">{sobretitulo}</p>}
+      <h2 className="text-bruma text-[2rem] leading-[1.12] sm:text-[2.6rem] md:text-[3rem]">
         {titulo}
       </h2>
       {bajada && (
-        <p
-          className={`mt-5 text-[1.05rem] leading-relaxed ${
-            oscuro ? 'text-arena/75' : 'text-tinta-2'
-          }`}
-        >
-          {bajada}
-        </p>
+        <p className="text-bruma-2 mt-6 text-[1.02rem] leading-relaxed">{bajada}</p>
       )}
     </Aparece>
   );
 }
 
 /**
- * Entrada al hacer scroll: 12px de subida y un fundido. Una sola vez, y se
- * anula solo con prefers-reduced-motion (lo maneja el CSS global).
+ * Entrada al hacer scroll: 12px de subida y un fundido, una sola vez.
+ * `whileInView` con `once` deja el elemento en su estado final para siempre,
+ * así que no hay riesgo de que algo quede invisible si el scroll no vuelve.
  */
 export function Aparece({
   children,

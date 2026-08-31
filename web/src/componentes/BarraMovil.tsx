@@ -21,17 +21,22 @@ export function BarraMovil() {
   return (
     <div
       aria-hidden={!visible}
-      className={`bg-arena/95 border-arena-3/70 fixed inset-x-0 bottom-0 z-40 border-t backdrop-blur-xl transition-transform duration-500 ease-(--ease-suave) lg:hidden ${
+      className={`bg-noche/95 border-filete fixed inset-x-0 bottom-0 z-40 border-t backdrop-blur-xl transition-transform duration-500 ease-(--ease-suave) lg:hidden ${
         visible ? 'translate-y-0' : 'translate-y-full'
       }`}
       style={{paddingBottom: 'env(safe-area-inset-bottom)'}}
     >
       <div className="flex items-center justify-between gap-4 px-5 py-3">
         <div className="leading-tight">
-          <p className="text-tinta-3 text-[0.7rem] font-medium tracking-wide uppercase">Desde</p>
-          <p className="font-display text-tinta text-xl font-semibold">
+          <p className="condensada text-bruma-3 text-[0.62rem]">Desde</p>
+          <p
+            className="text-bruma font-display text-xl"
+            style={{fontVariationSettings: "'wdth' 100, 'wght' 800"}}
+          >
             {formatearSoles(NEGOCIO.precioDesde)}
-            <span className="text-tinta-3 ml-1 text-[0.8rem] font-normal">la noche</span>
+            <span className="text-bruma-3 ml-1.5 font-sans text-[0.78rem] font-normal">
+              la noche
+            </span>
           </p>
         </div>
         <a
@@ -39,7 +44,7 @@ export function BarraMovil() {
           target="_blank"
           rel="noopener noreferrer"
           tabIndex={visible ? 0 : -1}
-          className="bg-whatsapp hover:bg-whatsapp-hover inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-[0.95rem] font-semibold text-white transition-colors active:scale-[0.98]"
+          className="bg-sol text-noche inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-[0.95rem] font-semibold transition-colors active:scale-[0.98]"
         >
           <IconoWhatsApp size={18} />
           Reservar
