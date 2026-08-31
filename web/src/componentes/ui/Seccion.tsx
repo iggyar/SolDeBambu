@@ -1,4 +1,3 @@
-import {motion} from 'motion/react';
 import type {ReactNode} from 'react';
 
 type Props = {
@@ -38,9 +37,12 @@ export function Encabezado({sobretitulo, titulo, bajada, centrado = false}: Enca
 }
 
 /**
- * Entrada al hacer scroll: 12px de subida y un fundido, una sola vez.
- * `whileInView` con `once` deja el elemento en su estado final para siempre,
- * así que no hay riesgo de que algo quede invisible si el scroll no vuelve.
+ * Entrada al hacer scroll, resuelta enteramente en CSS (ver `.aparece`).
+ *
+ * No usa motion a propósito. Las dos versiones anteriores ataban la opacidad a
+ * una animación de JavaScript, y en las dos el contenido se quedó invisible
+ * cuando la animación no llegó a correr. El estado de reposo de esto es
+ * "se ve"; la animación es un extra que ocurre solo si el navegador puede.
  */
 export function Aparece({
   children,
@@ -49,17 +51,22 @@ export function Aparece({
 }: {
   children: ReactNode;
   className?: string;
+  /** Escalona el reveal corriendo el tramo en el que ocurre. */
   demora?: number;
 }) {
   return (
-    <motion.div
-      initial={{opacity: 0, y: 12}}
-      whileInView={{opacity: 1, y: 0}}
-      viewport={{once: true, margin: '-60px'}}
-      transition={{duration: 0.6, delay: demora, ease: [0.16, 1, 0.3, 1]}}
-      className={className}
+    <div
+      className={`aparece ${className}`}
+      style={
+        demora
+          ? ({
+              '--entrada-desde': `${4 + demora * 30}%`,
+              '--entrada-hasta': `${42 + demora * 30}%`,
+            } as React.CSSProperties)
+          : undefined
+      }
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

@@ -57,7 +57,7 @@ export function Hero() {
           conservan su luz y solo el cielo se apaga. Es lo que le da al
           wordmark el contraste que en Nestora regala un cielo tormentoso
           y que un mediodía de Cañete no tiene. */}
-      <div className="from-noche/75 via-noche/45 to-noche/5 pointer-events-none absolute inset-0 bg-gradient-to-b" />
+      <div className="from-noche/58 via-noche/22 pointer-events-none absolute inset-0 bg-gradient-to-b to-transparent" />
 
       {/* ── CAPA 2 · el sol y el wordmark, DETRÁS del paisaje ─────────── */}
       <div className="absolute inset-0 overflow-hidden">
@@ -85,13 +85,18 @@ export function Hero() {
             en cualquier pantalla. Ese es el motivo de usar una fuente con eje
             de ancho en vez de una condensada fija. */}
         <motion.h1
-          style={{
-            // Se ancla por abajo, no por arriba: lo que importa es cuánto se
-            // hunde por debajo del horizonte, y eso se mide desde el pie.
-            bottom: `${(1 - hero.horizonte) * 100 - 5}%`,
-            ...(sinMovimiento ? {} : {y: yWordmark}),
-          }}
-          className="wordmark text-bruma absolute inset-x-0 px-2 text-center"
+          style={
+            {
+              // Se ancla por abajo, no por arriba: lo que importa es cuánto se
+              // hunde por debajo del horizonte, y eso se mide desde el pie.
+              // Dos valores porque el recorte cambia: en móvil se ve la franja
+              // central, donde el bambú sube, y hay que anclarse a las copas.
+              '--pie-movil': `${(1 - hero.horizonteAlto) * 100 - 2}%`,
+              '--pie-esc': `${(1 - hero.horizonte) * 100 - 5}%`,
+              ...(sinMovimiento ? {} : {y: yWordmark}),
+            } as React.CSSProperties
+          }
+          className="wordmark text-bruma absolute inset-x-0 bottom-(--pie-movil) px-2 text-center sm:bottom-(--pie-esc)"
         >
           <span className="block text-[18.4vw] whitespace-nowrap sm:hidden">
             Sol de

@@ -27,7 +27,21 @@
   --color-sol: #F0A93C;
   --color-sol-vivo: #FFC15E;
 
-  /* — Texto: blancos cálidos, nunca blanco puro sobre verde — */
+  /* ── LA MITAD DE DÍA ──────────────────────────────────────────────
+     La página no es oscura: es un día que cae. Arriba está el valle
+     soleado, que es lo que las fotos son de verdad, y recién después de
+     la secuencia del atardecer se hace de noche. Estos son los tonos de
+     la primera mitad. */
+  --color-arena: #F4EFE3;
+  --color-arena-2: #EBE3D3;
+  --color-arena-3: #DACEB6;
+  --color-tinta: #241F19;
+  --color-tinta-2: #5C554B;
+  --color-tinta-3: #7C7466;
+  /* Acento de la mitad clara: el ámbar del sol no contrasta sobre crema. */
+  --color-tierra: #A8511F;
+
+  /* — Texto sobre la mitad de noche: blancos cálidos, nunca blanco puro — */
   --color-bruma: #EDE7DA;
   --color-bruma-2: #A8A79B;
   --color-bruma-3: #8A8A80;
@@ -116,6 +130,26 @@
        Con `both` un elemento cuya animación nunca arranca se queda escondido
        para siempre. Acá el reposo natural es "se ve". */
     animation: entrada-suave 0.85s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+
+  /* Reveal al entrar en pantalla, SIN JavaScript.
+     Usa animation-timeline: view(), que ata la animación a la posición del
+     elemento en el viewport y la resuelve el compositor. Donde no está
+     soportado (Safari, Firefox) simplemente no hay animación y el contenido se
+     ve, que es exactamente el comportamiento que queremos: ya me pasó dos veces
+     dejar contenido invisible porque una animación de JS no llegó a correr. */
+  .aparece {
+    --entrada-desde: 4%;
+    --entrada-hasta: 42%;
+  }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .aparece {
+        animation: entrada-suave linear both;
+        animation-timeline: view();
+        animation-range: entry var(--entrada-desde) entry var(--entrada-hasta);
+      }
+    }
   }
 
   @keyframes latido-suave {

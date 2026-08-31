@@ -6,28 +6,37 @@
 export type MedidasFoto = {anchos: number[]; proporcion: number};
 
 export const FOTOS: Record<string, MedidasFoto> = {
-  "jardin-palmeras": {
-    "anchos": [
-      640,
-      1024,
-      1600
-    ],
-    "proporcion": 0.75
-  },
-  "cabanas-piscina": {
-    "anchos": [
-      640,
-      1024
-    ],
-    "proporcion": 0.75
-  },
   "piscina-quincho": {
     "anchos": [
       640,
       1024,
       1600
     ],
-    "proporcion": 0.75
+    "proporcion": 0.5625
+  },
+  "cabanas-piscina": {
+    "anchos": [
+      640,
+      1024,
+      1600
+    ],
+    "proporcion": 0.5625
+  },
+  "jardin-palmeras": {
+    "anchos": [
+      640,
+      1024,
+      1600
+    ],
+    "proporcion": 0.5625
+  },
+  "cabana-noche": {
+    "anchos": [
+      640,
+      1024,
+      1600
+    ],
+    "proporcion": 0.5625
   },
   "cabana-palmeras": {
     "anchos": [
@@ -36,14 +45,6 @@ export const FOTOS: Record<string, MedidasFoto> = {
       1200
     ],
     "proporcion": 1.3333
-  },
-  "cabana-noche": {
-    "anchos": [
-      640,
-      1024,
-      1600
-    ],
-    "proporcion": 0.75
   },
   "dormitorio-uno": {
     "anchos": [

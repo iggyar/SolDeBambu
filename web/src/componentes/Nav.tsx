@@ -5,19 +5,30 @@ import {NEGOCIO} from '@/config/negocio';
 import {enlaceWhatsApp, MENSAJES} from '@/lib/whatsapp';
 
 const ENLACES = [
-  {href: '#el-dia', texto: 'El día'},
   {href: '#cabanas', texto: 'La cabaña'},
-  {href: '#precios', texto: 'Precios'},
   {href: '#galeria', texto: 'Galería'},
+  {href: '#atardecer', texto: 'El atardecer'},
+  {href: '#precios', texto: 'Precios'},
   {href: '#llegar', texto: 'Cómo llegar'},
 ];
 
 export function Nav() {
   const [solida, setSolida] = useState(false);
+  // La página tiene dos mitades, una clara y una oscura, y la barra tiene que
+  // cambiar de piel al cruzar la secuencia del atardecer. Una barra verde
+  // oscuro sobre el crema se ve de un oliva sucio, y una crema sobre la noche
+  // corta la página en dos.
+  const [esNoche, setEsNoche] = useState(false);
+
   const [abierta, setAbierta] = useState(false);
 
   useEffect(() => {
-    const alScroll = () => setSolida(window.scrollY > 40);
+    const alScroll = () => {
+      setSolida(window.scrollY > 40);
+      const bisagra = document.getElementById('atardecer');
+      // Cambia cuando la secuencia ya ocupó la mitad de la pantalla.
+      setEsNoche(!!bisagra && bisagra.getBoundingClientRect().top < window.innerHeight * 0.5);
+    };
     alScroll();
     window.addEventListener('scroll', alScroll, {passive: true});
     return () => window.removeEventListener('scroll', alScroll);
@@ -33,16 +44,20 @@ export function Nav() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-(--ease-suave) ${
+        className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-500 ease-(--ease-suave) ${
           solida
-            ? 'bg-noche/80 border-filete border-b backdrop-blur-xl'
-            : 'border-b border-transparent'
+            ? esNoche
+              ? 'bg-noche/80 border-filete backdrop-blur-xl'
+              : 'bg-arena/85 border-arena-3/60 backdrop-blur-xl'
+            : 'border-transparent'
         }`}
       >
         <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:h-[4.5rem] sm:px-8">
           <a
             href="#inicio"
-            className="text-bruma font-display text-[1.05rem] leading-none tracking-tight"
+            className={`font-display text-[1.05rem] leading-none tracking-tight transition-colors ${
+              solida && !esNoche ? 'text-tinta' : 'text-bruma'
+            }`}
             style={{fontVariationSettings: "'wdth' 118, 'wght' 800"}}
           >
             Sol de Bambú
@@ -53,7 +68,11 @@ export function Nav() {
               <a
                 key={e.href}
                 href={e.href}
-                className="text-bruma-2 hover:text-bruma text-[0.86rem] font-medium transition-colors"
+                className={`text-[0.86rem] font-medium transition-colors ${
+                  solida && !esNoche
+                    ? 'text-tinta-2 hover:text-tinta'
+                    : 'text-bruma-2 hover:text-bruma'
+                }`}
               >
                 {e.texto}
               </a>
@@ -63,7 +82,11 @@ export function Nav() {
           <div className="flex items-center gap-2">
             <a
               href={`tel:+${NEGOCIO.whatsapp}`}
-              className="condensada text-bruma-2 hover:text-bruma hidden text-[0.72rem] transition-colors xl:block"
+              className={`condensada hidden text-[0.72rem] transition-colors xl:block ${
+                solida && !esNoche
+                  ? 'text-tinta-2 hover:text-tinta'
+                  : 'text-bruma-2 hover:text-bruma'
+              }`}
             >
               {NEGOCIO.telefonoVisible}
             </a>
@@ -71,7 +94,11 @@ export function Nav() {
               href={enlaceWhatsApp(MENSAJES.general)}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-bruma text-noche inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-[0.86rem] font-semibold transition-colors hover:bg-white sm:px-5"
+              className={`inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-[0.86rem] font-semibold transition-colors sm:px-5 ${
+                solida && !esNoche
+                  ? 'bg-tinta text-arena hover:bg-black'
+                  : 'bg-bruma text-noche hover:bg-white'
+              }`}
             >
               <IconoWhatsApp size={16} />
               <span className="hidden sm:inline">Reservar</span>
@@ -81,7 +108,7 @@ export function Nav() {
               type="button"
               onClick={() => setAbierta(true)}
               aria-label="Abrir menú"
-              className="text-bruma -mr-1 p-2 lg:hidden"
+              className={`-mr-1 p-2 lg:hidden ${solida && !esNoche ? 'text-tinta' : 'text-bruma'}`}
             >
               <Menu size={22} />
             </button>

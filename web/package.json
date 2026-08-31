@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "lint": "tsc --noEmit",
     "fotos": "node scripts/optimizar-fotos.mjs",
-    "mascara": "node scripts/generar-mascara.mjs"
+    "mascara": "node scripts/generar-mascara.mjs",
+    "secuencia": "node scripts/preparar-secuencia.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.546.0",

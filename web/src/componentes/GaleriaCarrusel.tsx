@@ -32,11 +32,11 @@ export function GaleriaCarrusel() {
   });
 
   return (
-    <section id="galeria" className="bg-noche overflow-hidden py-24 md:py-32">
+    <section id="galeria" className="bg-arena overflow-hidden py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <Aparece className="max-w-2xl">
-          <p className="condensada text-musgo mb-4 text-[0.72rem]">Galería</p>
-          <h2 className="text-bruma text-[2rem] leading-[1.12] sm:text-[2.6rem] md:text-[3rem]">
+          <p className="condensada text-tierra mb-4 text-[0.72rem]">Galería</p>
+          <h2 className="text-tinta text-[2rem] leading-[1.12] sm:text-[2.6rem] md:text-[3rem]">
             Así se ve, sin filtros.
           </h2>
         </Aparece>
@@ -96,9 +96,9 @@ export function GaleriaCarrusel() {
                   sizes="(min-width: 640px) 42vw, 74vw"
                   className="h-full w-full object-cover"
                 />
-                {!centro && <span className="bg-noche/45 absolute inset-0" />}
+                {!centro && <span className="bg-arena/45 absolute inset-0" />}
                 {centro && (
-                  <span className="text-noche absolute right-4 bottom-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <span className="text-tinta absolute right-4 bottom-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <Expand size={15} strokeWidth={2} />
                   </span>
                 )}
@@ -109,7 +109,7 @@ export function GaleriaCarrusel() {
       </div>
 
       <div className="mx-auto mt-10 flex max-w-6xl flex-col items-center gap-6 px-5 sm:px-8">
-        <p className="text-bruma-2 max-w-md text-center text-[0.92rem] leading-relaxed">
+        <p className="text-tinta-2 max-w-md text-center text-[0.92rem] leading-relaxed">
           {GALERIA[activo].alt}
         </p>
 
@@ -118,7 +118,7 @@ export function GaleriaCarrusel() {
             type="button"
             onClick={() => ir(-1)}
             aria-label="Foto anterior"
-            className="border-filete text-bruma hover:border-sol hover:text-sol flex h-11 w-11 items-center justify-center rounded-full border transition-colors"
+            className="border-arena-3/60 text-tinta hover:border-tierra hover:text-tierra flex h-11 w-11 items-center justify-center rounded-full border transition-colors"
           >
             <ChevronLeft size={19} />
           </button>
@@ -136,8 +136,8 @@ export function GaleriaCarrusel() {
                 <span
                   className={`block rounded-full transition-all duration-300 ${
                     i === activo
-                      ? 'bg-sol h-1.5 w-5'
-                      : 'bg-bruma-3/50 group-hover:bg-bruma-2 h-1.5 w-1.5'
+                      ? 'bg-tierra h-1.5 w-5'
+                      : 'bg-tinta-3/40 group-hover:bg-tinta-2 h-1.5 w-1.5'
                   }`}
                 />
               </button>
@@ -148,7 +148,7 @@ export function GaleriaCarrusel() {
             type="button"
             onClick={() => ir(1)}
             aria-label="Foto siguiente"
-            className="border-filete text-bruma hover:border-sol hover:text-sol flex h-11 w-11 items-center justify-center rounded-full border transition-colors"
+            className="border-arena-3/60 text-tinta hover:border-tierra hover:text-tierra flex h-11 w-11 items-center justify-center rounded-full border transition-colors"
           >
             <ChevronRight size={19} />
           </button>

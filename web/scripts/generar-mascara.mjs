@@ -46,6 +46,12 @@ const modoManual = bandera('--modo', null);
 // Cuánto tiene que ganarle el azul al rojo para contar como cielo. Subirlo
 // rescata las lonas y toldos color crema, que son neutros y se colaban.
 const margen = Number(bandera('--margen', 4));
+// Segunda puerta para cielos en degradado: un pixel tambien es cielo si es MUY
+// claro, aunque el rojo le gane al azul. Es lo que rescata la banda dorada del
+// horizonte y las nubes blancas de un atardecer, sin dejar entrar un cerro
+// caliente de brillo medio, que es lo que ninguna de las dos pruebas sola logra.
+// Por defecto va desactivada (999).
+const brillo = Number(bandera('--brillo', 999));
 
 const DIR = path.resolve(process.cwd(), 'public/fotos');
 const prefijo = `${nombre}-`;
@@ -123,7 +129,8 @@ if (umbralManual !== null) {
 // En modo azul el color manda y la luminancia solo descarta sombras profundas.
 const esCieloPixel =
   modo === 'azul'
-    ? (i) => lum[i] >= umbral && data[i * C + 2] >= data[i * C] + margen
+    ? (i) =>
+        (lum[i] >= umbral && data[i * C + 2] >= data[i * C] + margen) || lum[i] >= brillo
     : (i) => lum[i] >= umbral;
 
 const esCielo = new Uint8Array(W * H);
@@ -186,6 +193,9 @@ for (let i = 0; i < W * H; i++) cuenta += esCielo[i];
 console.log(`  foto      ${nombre}-${ancho}.webp  (${W}x${H})`);
 console.log(`  modo      ${modo}${modoManual ? ' (manual)' : ' (detectado)'}`);
 console.log(`  umbral    ${umbral}${umbralManual !== null ? ' (manual)' : ' (automático)'}`);
-if (modo === 'azul') console.log(`  margen    azul supera al rojo por ${margen}`);
+if (modo === 'azul') {
+  console.log(`  margen    azul supera al rojo por ${margen}`);
+  if (brillo < 999) console.log(`  brillo    o luminancia >= ${brillo}`);
+}
 console.log(`  cielo     ${((cuenta / (W * H)) * 100).toFixed(1)}% de la imagen`);
 console.log(`  revisión  public/fotos/_revision-${nombre}.jpg`);

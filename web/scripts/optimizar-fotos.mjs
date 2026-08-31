@@ -26,11 +26,15 @@ const ANCHOS_OBJETIVO = [640, 1024, 1600];
 // Nombre original → nombre publicado. Renombrar acá y no en disco mantiene
 // intactos los archivos que el dueño tiene en su carpeta.
 const MAPA = {
-  'solbambu1.png': 'jardin-palmeras',
-  'solbambu2.png': 'cabanas-piscina',
-  'solbambu3.png': 'piscina-quincho',
+  // Las cuatro primeras se regeneraron con Grok a partir de las originales:
+  // misma arquitectura y encuadre, corregida la luz y limpiado el terreno.
+  // Pasaron de 4:3 a 16:9, por eso hay que volver a correr esto y la mascara.
+  'solbambu3MEJORADOGROK.jpg': 'piscina-quincho',
+  'Solbambu2MEJORADAGROK.jpg': 'cabanas-piscina',
+  'SOLBAMBU1GROKMEJORADO.jpg': 'jardin-palmeras',
+  'SolBambu5GROKMEJORADA.jpg': 'cabana-noche',
+  // Estas siguen siendo las originales de celular, pendientes de mejorar.
   'solbambu4.png': 'cabana-palmeras',
-  'solbambu5.png': 'cabana-noche',
   'solbambuadentro1.png': 'dormitorio-uno',
   'solbambuadentro2.png': 'sala-escalera',
   'solbamuadentro3.png': 'dormitorio-dos',

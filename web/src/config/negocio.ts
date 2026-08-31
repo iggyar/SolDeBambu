@@ -63,7 +63,15 @@ export const NEGOCIO = {
      * cambias la foto del hero, mira la revisión que deja el generador de
      * máscara y ajusta este número.
      */
-    horizonte: 0.47,
+    horizonte: 0.442,
+    /**
+     * Altura de las copas más altas (percentil 20 del borde), medida sobre la
+     * máscara. En móvil solo se ve la franja central de la foto y ahí el bambú
+     * sube mucho: si el wordmark se ancla a la mediana, la segunda línea
+     * desaparece entera detrás de las hojas. Con este valor solo la muerden las
+     * puntas, que es el efecto que se busca.
+     */
+    horizonteAlto: 0.406,
   },
 
   reseñasGoogle: {
