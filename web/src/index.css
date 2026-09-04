@@ -1,86 +1,165 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════════
-   SISTEMA DE DISEÑO — SOL DE BAMBÚ v2
-   Cinematográfico y oscuro. Los seis colores están muestreados de la
-   propiedad: el verde del techo y del bambú, la terracota del OSB, el
-   ámbar del atardecer que menciona la reseña de Jeri. Verde y no negro
-   puro a propósito — el negro con un acento brillante es el default de
-   cualquier landing oscura, y este verde solo puede ser de este lugar.
+   SISTEMA DE DISEÑO — SOL DE BAMBÚ v5
+   La página es una tarde que cae. Empieza en el celeste del valle de
+   Mala a mediodía y termina en el azul tinta de la hora de la fogata,
+   y el cambio no ocurre de golpe: entre el final de la galería y el
+   final de la secuencia del atardecer, el fondo y el texto de la
+   página se mezclan progresivamente con el scroll (ver --mezcla).
+
+   El registro es editorial: fotografía grande, tipografía con carácter,
+   mucho aire y una sola voz de acción — el amarillo sol del CTA.
    ═══════════════════════════════════════════════════════════════════ */
 
 @theme {
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  /* — Tres voces + el wordmark —
+     El display (Archivo) está reservado al wordmark: su eje de ancho es lo
+     que le permite llenar el viewport exacto en el hero. Es el logotipo, no
+     un titular, y por eso es lo único que no habla en serif. */
+  --font-sans: 'Jost', system-ui, -apple-system, sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --font-display: 'Archivo', 'Arial Black', system-ui, sans-serif;
+  /* LA VOZ EDITORIAL de toda la página: etiquetas de sección, titulares,
+     cifras y portadas. Una serif de alto contraste es lo que separa "una casa
+     que se alquila" de "un lugar al que se va", y hacerlo con la tipografía no
+     cuesta ni un color ni un elemento de más. Empezó viviendo solo en la
+     galería; el resto se pasó a ella porque dos voces editoriales compitiendo
+     ordenan menos que una sola sostenida. */
+  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
 
-  /* — Fondo: verde bambú tan oscuro que lee como negro — */
-  --color-noche: #0E1512;
-  --color-noche-hondo: #080C0A;
-  --color-bosque: #16211B;
-  --color-bosque-alto: #1F2E26;
-  --color-filete: #2A3A31;
+  /* ── LA NOCHE ─────────────────────────────────────────────────────
+     Azul tinta profundo, nunca negro. El violeta apagado del fondo es
+     lo que impide que se lea como el negro por defecto de cualquier
+     landing oscura.
 
-  /* — Vegetación viva: sobretítulos, íconos — */
-  --color-musgo: #7E9B6B;
+     La familia entera se movió hacia el azul: el anterior (#0C1225) tenía
+     tan poco azul por encima del rojo que a pantalla completa se leía como
+     un gris sucio en vez de como una noche. Lo que cambia es la distancia
+     entre canales —de 25 puntos entre rojo y azul a 38—, que es de donde
+     sale la sensación de color; la luminancia apenas se mueve, así que la
+     crema sobre la noche sigue en 14.8:1 y todo lo demás aguanta igual.
 
-  /* — El acento: el atardecer de Mala. Único color de acción. — */
-  --color-sol: #F0A93C;
-  --color-sol-vivo: #FFC15E;
+     Los cinco tonos se movieron juntos y en la misma dirección: mezclar un
+     azul vivo con un gris de la familia vieja es lo que hace que un fondo
+     oscuro se vea manchado. */
+  --color-noche: #0B1531;
+  --color-noche-hondo: #060D22;
+  --color-bosque: #131F3F;
+  --color-bosque-alto: #1D2B4F;
+  --color-filete: #2B3A66;
 
-  /* ── LA MITAD DE DÍA ──────────────────────────────────────────────
-     La página no es oscura: es un día que cae. Arriba está el valle
-     soleado, que es lo que las fotos son de verdad, y recién después de
-     la secuencia del atardecer se hace de noche. Estos son los tonos de
-     la primera mitad. */
-  --color-arena: #F4EFE3;
-  --color-arena-2: #EBE3D3;
-  --color-arena-3: #DACEB6;
-  --color-tinta: #241F19;
-  --color-tinta-2: #5C554B;
-  --color-tinta-3: #7C7466;
-  /* Acento de la mitad clara: el ámbar del sol no contrasta sobre crema. */
-  --color-tierra: #A8511F;
+  /* — Texto sobre la noche: crema cálida, nunca blanco puro —
+     #F4E8D3 sobre #0B1531 da 14.8:1; los dos escalones de abajo se
+     mantienen sobre 4.5:1, que es AA para texto normal. */
+  --color-bruma: #F4E8D3;
+  --color-bruma-2: #C2BBAD;
+  --color-bruma-3: #9B958B;
 
-  /* — Texto sobre la mitad de noche: blancos cálidos, nunca blanco puro — */
-  --color-bruma: #EDE7DA;
-  --color-bruma-2: #A8A79B;
-  --color-bruma-3: #8A8A80;
+  /* ── EL DÍA ───────────────────────────────────────────────────────
+     Celeste de cielo del valle, plano. Un degradado a esta escala se
+     lee como banda, no como cielo. */
+  --color-cielo: #D3E8F5;
+  --color-arena: #D3E8F5;
+  --color-arena-2: #C6DFEF;
+  --color-arena-3: #AFCFE2;
+  --color-tinta: #111C2C;
+  --color-tinta-2: #3E5164;
+  --color-tinta-3: #647A8D;
+
+  /* — Verde bambú apagado: la vegetación. Acento secundario del día. — */
+  --color-bambu: #456E4B;
+  /* Su versión levantada para poder leerse sobre la noche (5.9:1). */
+  --color-musgo: #7FA07E;
+  /* El verde de las CAÑAS dibujadas: ni el bambú de la vegetación —que sobre
+     el azul de la noche se hunde— ni el musgo pelado —que se va a menta—. Es
+     el punto medio, y vive aquí y no repetido en cada sitio porque lo usan dos
+     piezas distintas: la caña medianera y el marco de las tarjetas de vidrio.
+     Si el verde cambia, cambia en las dos a la vez o dejan de ser el mismo
+     bambú. */
+  --color-cana: color-mix(in oklab, #7FA07E, #456E4B 55%);
+
+  /* — Crema cálida: la superficie de papel de la mitad de día. — */
+  --color-crema: #F4E8D3;
+
+  /* — EL ACENTO. Un solo color de acción en toda la página: el sol.
+       De día #F4A62A, de noche #F6A72D — el mismo pigmento, un grado de
+       calidez de diferencia. Siempre con texto tinta encima. — */
+  --color-sol: #F6A72D;
+  --color-sol-dia: #F4A62A;
+  --color-sol-hondo: #DE8F16;
+  --color-sol-vivo: #FFBE55;
+
+  /* — Terracota: el acento de TEXTO de la mitad de día. El amarillo sol sobre
+       celeste no llega a 2:1 y no se puede usar para texto; la terracota es el
+       mismo calor un paso más abajo y sí se lee.
+       Medida sobre #D3E8F5: 5.2:1. El tono anterior (#A8511F) daba 4.27 y se
+       quedaba corto de AA justo en las etiquetas, que son el texto más chico
+       de la página. — */
+  --color-tierra: #96481B;
 
   --color-whatsapp: #25D366;
   --color-whatsapp-hover: #34E27A;
 
-  /* — Sombras: negro verdoso, no negro neutro — */
-  --shadow-suave: 0 2px 8px rgba(0, 0, 0, 0.30);
-  --shadow-media: 0 4px 12px rgba(0, 0, 0, 0.35), 0 16px 40px rgba(0, 0, 0, 0.40);
-  --shadow-alta: 0 8px 20px rgba(0, 0, 0, 0.40), 0 32px 70px rgba(0, 0, 0, 0.55);
+  /* — Sombras: azul-negro, no negro neutro — */
+  --shadow-suave: 0 2px 8px rgb(6 10 22 / 0.28);
+  --shadow-media: 0 4px 14px rgb(6 10 22 / 0.30), 0 18px 44px rgb(6 10 22 / 0.34);
+  --shadow-alta: 0 10px 24px rgb(6 10 22 / 0.34), 0 36px 80px rgb(6 10 22 / 0.46);
 
+  /* La curva del sistema. `suave` para respuesta de interfaz (color,
+     presión); `editorial` para todo lo que se desplaza: entra rápido y
+     se posa despacio, sin rebote. */
   --ease-suave: cubic-bezier(0.16, 1, 0.3, 1);
-
+  --ease-editorial: cubic-bezier(0.22, 0.61, 0.24, 1);
+  /* La curva de la galería: sale rápido y se posa muy largo, sin rebote. Es
+     lo que hace que una lámina que se recentra se sienta pesada y controlada
+     en vez de elástica. */
+  --ease-lamina: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 5.5rem;
+    overflow-x: clip;
     -webkit-text-size-adjust: 100%;
     background-color: var(--color-noche);
+    scrollbar-color: var(--color-tinta-3) transparent;
+    scrollbar-width: thin;
+  }
+
+  /* Habilita animar `height: auto`, que es lo que hace posible el
+     acordeón del FAQ con `<details>` nativo y sin JavaScript. */
+  @supports (interpolate-size: allow-keywords) {
+    :root { interpolate-size: allow-keywords; }
   }
 
   body {
     background-color: var(--color-noche);
     color: var(--color-bruma);
     font-family: var(--font-sans);
+    /* Jost tiene la x más baja que la grotesca que reemplazó: al mismo cuerpo
+       se lee un punto más chica. El tamaño sube para que la línea mida lo
+       mismo en la página, no en la hoja de estilos. */
+    font-size: 1.05rem;
+    line-height: 1.64;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
+  /* Los titulares editoriales. `.wordmark` (hero) redefine familia y ejes
+     por su cuenta, así que esta regla no lo toca.
+
+     El tracking casi no aprieta y el interlineado abre un punto respecto de
+     la grotesca anterior: una serif de alto contraste con las letras muy
+     juntas empasta los remates, que es justo lo que la hace elegante. */
   h1, h2, h3 {
-    font-family: var(--font-display);
-    /* wdth 112 es el ancho de los titulares: ancho para tener presencia,
-       un punto por debajo del wordmark para que nada le compita. */
-    font-variation-settings: 'wdth' 112, 'wght' 700;
-    letter-spacing: -0.02em;
+    font-family: var(--font-serif);
+    font-variation-settings: normal;
+    font-weight: 500;
+    letter-spacing: -0.012em;
+    line-height: 1.06;
     text-wrap: balance;
   }
 
@@ -97,16 +176,83 @@
 }
 
 @layer utilities {
-  /* La misma familia en su eje más estrecho: datos, kilómetros, horas y
-     precios. Condensada y en versalitas lee como una ficha técnica. */
-  .condensada {
-    font-family: var(--font-display);
-    font-variation-settings: 'wdth' 62, 'wght' 600;
-    letter-spacing: 0.08em;
+  /* ═══ TIPOGRAFÍA ══════════════════════════════════════════════════ */
+
+  /* EL MICROCOPY. Mono, versalitas y tracking abierto: "KM 86",
+     "MALA, PERÚ", "01 / 15". Es el único lugar de la página donde se
+     usan mayúsculas, y nunca lleva más de cuatro o cinco palabras. */
+  .condensada,
+  .mono {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
+    font-feature-settings: 'tnum' 1;
   }
 
-  /* El wordmark del hero: el eje de ancho al máximo. */
+  /* Titular de sección. De tres o cuatro líneas, con el interlineado cerrado
+     que le da densidad editorial.
+
+     Los cuerpos suben cerca de un 15% respecto de la grotesca que había antes:
+     la Garamond dibuja la letra más chica dentro del mismo cuerpo, así que
+     mantener el número habría encogido todos los titulares de la página. Lo
+     que se conserva igual no es el clamp, es la presencia. */
+  .titular {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -0.014em;
+    text-wrap: balance;
+    font-size: clamp(2.4rem, 1.3rem + 3.8vw, 4.25rem);
+  }
+  .titular-grande {
+    font-size: clamp(2.8rem, 1.25rem + 5.2vw, 5.4rem);
+  }
+  /* En tamaño de pie el peso sube a 600: a 1.5rem, el 500 de una serif de
+     alto contraste adelgaza tanto que sobre fondo oscuro se despinta. */
+  .titular-chico {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    line-height: 1.14;
+    letter-spacing: -0.008em;
+    font-size: clamp(1.5rem, 1.05rem + 1.35vw, 2rem);
+  }
+
+  /* LA BAJADA — el escalón entre el titular y el cuerpo. Sin esto el
+     salto de 58px a 16px hace que las secciones se lean apuradas. */
+  .bajada {
+    font-size: 1.14rem;
+    line-height: 1.7;
+    letter-spacing: 0.004em;
+    max-width: 34rem;
+  }
+
+  /* EL TITULAR DE PORTADA. Serif de alto contraste, peso regular y una sola
+     palabra en cursiva. El interlineado va por debajo de 1 porque a este
+     tamaño las dos líneas tienen que leerse como un bloque, no como dos
+     frases sueltas. */
+  .portada {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(3rem, 5vw, 5.8rem);
+    line-height: 0.94;
+    letter-spacing: -0.018em;
+    text-wrap: balance;
+  }
+  .portada em {
+    font-style: italic;
+    font-weight: 400;
+  }
+  /* La misma voz, en tamaño de pie: el título de la foto seleccionada. */
+  .portada-chica {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(1.5rem, 1rem + 1.4vw, 2.25rem);
+    line-height: 1.12;
+    letter-spacing: -0.012em;
+  }
+
+  /* El wordmark del hero. Única aparición de Archivo. */
   .wordmark {
     font-family: var(--font-display);
     font-variation-settings: 'wdth' 125, 'wght' 900;
@@ -115,40 +261,1484 @@
     text-transform: uppercase;
   }
 
-  /* Entrada del contenido crítico del hero.
-     Va en CSS y no en JS a propósito: el texto y el botón de reservar tienen
-     que existir aunque la animación no llegue a correr. Un CTA que depende de
-     JavaScript para ser visible es un CTA que algún día no se ve. La regla
-     global de prefers-reduced-motion la aplana a cero. */
-  @keyframes entrada-suave {
+  /* EL WORDMARK, DE CRISTAL.
+     Antes era crema al 88%: una letra sólida, pintada encima de la
+     fotografía. Ahora la fotografía pasa POR DENTRO de la letra y lo que
+     queda de ella son dos cosas —un relleno translúcido y un filo de luz—,
+     que es de lo que está hecho un cristal grueso: casi nada de cuerpo y
+     todo el canto.
+
+     El relleno es un degradado y no un plano: un cristal recoge más luz
+     arriba y abajo que en el medio, y esa curvatura es lo que impide que se
+     lea como texto con la opacidad bajada. Va con `background-clip: text`,
+     así que el degradado se recorta contra las letras.
+
+     El filo es `-webkit-text-stroke` de 1px y no una sombra: la sombra
+     difumina hacia afuera y aquí hace falta un borde neto, que es lo que
+     sostiene la forma cuando el relleno casi no existe. Y `drop-shadow` en
+     lugar de `text-shadow` porque con el relleno recortado la sombra tiene
+     que salir de la silueta real, contorno incluido.
+
+     El color sólido de la primera regla no es un adorno: si el navegador no
+     recorta fondos contra el texto, `color: transparent` deja el logotipo
+     invisible. Esa regla es el suelo; la de abajo es la mejora. */
+  .wordmark-vidrio {
+    color: rgb(244 232 211 / 0.78);
+  }
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .wordmark-vidrio {
+      color: transparent;
+      background-image: linear-gradient(
+        to bottom,
+        rgb(255 255 255 / 0.68) 0%,
+        rgb(244 232 211 / 0.46) 48%,
+        rgb(255 255 255 / 0.6) 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-stroke: 1px rgb(255 255 255 / 0.5);
+      filter: drop-shadow(0 2px 12px rgb(8 14 26 / 0.3));
+    }
+  }
+
+  /* ═══ BOTONES ═════════════════════════════════════════════════════
+     Esquinas de 12px, no píldoras: el radio pleno lee como app, y esto
+     es una pieza impresa. Al hover se eleva 2px, el fondo baja un tono
+     y la flecha se corre 4px. Nada más — ni sombra que crece, ni escala.
+     El alto mínimo es de 44px porque la mitad del tráfico es táctil. */
+  .boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    min-height: 2.875rem;
+    padding: 0.8rem 1.4rem;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: -0.005em;
+    line-height: 1.2;
+    text-align: center;
+    transition:
+      translate 260ms var(--ease-editorial),
+      background-color 260ms var(--ease-suave),
+      border-color 260ms var(--ease-suave),
+      color 260ms var(--ease-suave);
+  }
+  /* Dos tamaños más, como modificadores y no como utilidades sueltas de
+     Tailwind: `.boton` y `px-4` viven en la misma capa, así que cuál gana
+     depende del orden en que se generen — y eso no es algo que deba decidir
+     el bundler. */
+  .boton-chico {
+    padding: 0.6rem 1rem;
+    min-height: 2.75rem;
+    font-size: 0.86rem;
+    gap: 0.5rem;
+  }
+  .boton-grande {
+    padding: 1.05rem 1.75rem;
+    min-height: 3.4rem;
+    font-size: 1.02rem;
+    width: 100%;
+  }
+
+  .boton:hover { translate: 0 -2px; }
+  .boton:active { translate: 0 0; }
+  .boton .flecha {
+    transition: transform 300ms var(--ease-editorial);
+    flex: none;
+  }
+  .boton:hover .flecha { transform: translateX(4px); }
+
+  /* El principal. Amarillo sol con texto tinta: 8.4:1. */
+  .boton-sol {
+    background-color: var(--color-sol);
+    color: var(--color-noche);
+  }
+  .boton-sol:hover { background-color: var(--color-sol-hondo); }
+  .boton-sol--dia { background-color: var(--color-sol-dia); }
+  .boton-sol--dia:hover { background-color: var(--color-sol-hondo); }
+
+  /* El secundario: solo borde, se rellena al hover. */
+  .boton-linea {
+    border-color: rgb(244 232 211 / 0.28);
+    color: var(--color-bruma);
+  }
+  .boton-linea:hover {
+    background-color: rgb(244 232 211 / 0.1);
+    border-color: rgb(244 232 211 / 0.5);
+  }
+  .boton-linea--dia {
+    border-color: rgb(17 28 44 / 0.24);
+    color: var(--color-tinta);
+  }
+  .boton-linea--dia:hover {
+    background-color: rgb(17 28 44 / 0.07);
+    border-color: rgb(17 28 44 / 0.5);
+  }
+
+  /* RESEÑAS EN GOOGLE.
+     La cápsula de confianza se recoge desde el centro para descubrir el
+     destino real del enlace. Es el gesto del ejemplo de Uiverse, adaptado a
+     la paleta y sin animar el ancho (que provocaría reflow). */
+  .enlace-resenas-google {
+    position: relative;
+    display: inline-grid;
+    /* Creció al mudarse: antes vivía en un costado del titular y ahora es el
+       aterrizaje de las cinco fugaces, centrado bajo el encabezado. En ese
+       sitio es la pieza que remata el titular, no una etiqueta al margen, y a
+       18rem se quedaba chica. El alto acompaña para que el texto no toque el
+       borde redondo. */
+    width: min(20.5rem, calc(100vw - 2.5rem));
+    min-height: 4.15rem;
+    place-items: center;
+    border-radius: 999px;
+    background-color: var(--color-filete);
+    color: var(--color-crema);
+    isolation: isolate;
+    clip-path: inset(0 round 999px);
+    box-shadow: 0 8px 24px rgb(7 11 24 / 0.22);
+    transition:
+      transform 150ms var(--ease-suave),
+      background-color 180ms ease;
+  }
+  .enlace-resenas-google:active {
+    transform: scale(0.97);
+  }
+  .enlace-resenas-google__capa {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    border-radius: inherit;
+    white-space: nowrap;
+  }
+  .enlace-resenas-google__capa--estrellas {
+    z-index: 1;
+    inset: 0.375rem;
+    border-radius: 999px;
+    background-color: var(--color-noche-hondo);
+    clip-path: inset(0 round 999px);
+    opacity: 1;
+    transition:
+      clip-path 250ms var(--ease-editorial),
+      opacity 150ms ease;
+  }
+  .enlace-resenas-google__capa--mapa {
+    color: var(--color-crema);
+    font-size: 0.9rem;
+    font-weight: 650;
+    letter-spacing: -0.005em;
+    opacity: 0;
+    transform: translate3d(0, 5px, 0);
+    transition:
+      opacity 180ms ease,
+      transform 250ms var(--ease-editorial);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .enlace-resenas-google:hover {
+      background-color: var(--color-bosque-alto);
+    }
+    .enlace-resenas-google:hover .enlace-resenas-google__capa--estrellas {
+      clip-path: inset(0 50% round 999px);
+      opacity: 0;
+    }
+    .enlace-resenas-google:hover .enlace-resenas-google__capa--mapa {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .enlace-resenas-google:focus-visible .enlace-resenas-google__capa--estrellas {
+    clip-path: inset(0 50% round 999px);
+    opacity: 0;
+  }
+  .enlace-resenas-google:focus-visible .enlace-resenas-google__capa--mapa {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ═══ LA HORA — la transición día → noche ═════════════════════════
+     `--mezcla` va de 0 (mediodía) a 1 (noche cerrada) y lo escribe el
+     scroll (ver lib/hora.ts). El fondo y el texto de la
+     zona de transición se mezclan en oklab contra esa fracción, así que
+     el cambio de hora es continuo y no un corte entre dos secciones.
+
+     El texto va en su PROPIA fracción, `--mezcla-t`, y no en la misma:
+     si la tinta y el celeste se cruzaran a la vez, habría un instante
+     con contraste 1:1. `--mezcla-t` se mantiene en 0 hasta que el
+     contenido de día ya salió de pantalla y recién ahí voltea. */
+  :root {
+    --mezcla: 0;
+    --mezcla-t: 0;
+    /* El color de la hora, expuesto como variable propia: las costuras entre
+       secciones (los degradados que cosen una sección con la siguiente) tienen
+       que arrancar de este color exacto, no de una copia del celeste. */
+    --hora-fondo: var(--color-cielo);
+    --hora-tinta: var(--color-tinta);
+  }
+
+  @supports (background-color: color-mix(in oklab, red, blue 50%)) {
+    :root {
+      --hora-fondo: color-mix(
+        in oklab,
+        var(--color-cielo),
+        var(--color-noche) calc(var(--mezcla) * 100%)
+      );
+      --hora-tinta: color-mix(
+        in oklab,
+        var(--color-tinta),
+        var(--color-bruma) calc(var(--mezcla-t) * 100%)
+      );
+      --hora-tinta-2: color-mix(
+        in oklab,
+        var(--color-tinta-2),
+        var(--color-bruma-2) calc(var(--mezcla-t) * 100%)
+      );
+      --hora-filete: color-mix(
+        in oklab,
+        var(--color-arena-3),
+        var(--color-filete) calc(var(--mezcla-t) * 100%)
+      );
+    }
+  }
+
+  /* ═══ LA BARRA DE VIDRIO ══════════════════════════════════════════
+     Un cristal, no una tapa: desenfoca y satura lo que pasa por debajo, y
+     se tiñe de ello.
+
+     El tinte NO puede salir de `--hora-fondo`, que es la hora de la PÁGINA.
+     Sobre el hero esa hora dice "día" —la transición al anochecer arranca
+     recién en el atardecer— mientras que detrás de la barra hay una
+     fotografía oscura, y de ahí salía la banda celeste cruzando la piscina.
+     La barra lleva entonces su propia fracción, `--oscuridad`, que Nav.tsx
+     escribe mirando lo que tiene detrás: uno mientras el hero la cubre, cero
+     sobre las secciones de día, y la hora de la página de ahí en adelante.
+
+     El fondo no se apoya en `backdrop-filter` para el contraste: donde el
+     desenfoque no existe queda igual una capa de color con la opacidad
+     suficiente para que el texto se lea. */
+  .barra-vidrio {
+    --oscuridad: 0;
+    background-color: rgb(211 232 245 / 0.40);
+    backdrop-filter: blur(30px) saturate(200%);
+    -webkit-backdrop-filter: blur(30px) saturate(200%);
+    /* El canto de luz de arriba. Es lo que termina de leerse como cristal y
+       no como tinte: un borde de vidrio recoge la luz por el filo superior.
+       Va en blanco puro y a alfa baja a propósito —sobre el celeste del día
+       casi no existe, sobre la noche aparece—, que es exactamente cómo se
+       comporta un reflejo. */
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.18);
+  }
+  .tinta-barra { color: var(--color-tinta); }
+  .enlace-barra {
+    color: var(--color-tinta-2);
+    transition: color 300ms var(--ease-suave);
+  }
+  .enlace-barra:hover { color: var(--color-tinta); }
+
+  @supports (color: color-mix(in oklab, red, blue 50%)) {
+    .barra-vidrio {
+      background-color: color-mix(
+        in oklab,
+        color-mix(in oklab, var(--color-cielo), var(--color-noche) calc(var(--oscuridad) * 100%)),
+        /* 40% de opacidad: cristal de verdad, no una tapa translúcida. El
+           desenfoque sube a la vez —26px en lugar de 18— porque son las dos
+           mitades del mismo efecto: bajar la opacidad sin desenfocar más no da
+           cristal, da una capa sucia con el contenido legible por detrás.
+
+           A esta opacidad el contraste lo decide lo que haya DETRÁS, y por eso
+           depende de que `--oscuridad` siga a la hora de la página (ver
+           Nav.tsx): sobre las secciones de noche el respaldo es el mismo azul
+           que el tinte y el texto crema queda en 15:1; sobre las de día, mismo
+           celeste y tinta oscura, 13:1; sobre la foto del camino, que es el
+           respaldo más claro que la barra llega a cruzar, 11.8:1.
+
+           Lo que sí se cae aquí es el caso contrario —crema sobre un respaldo
+           claro—, que daría 2.8:1. No llega a darse: el texto solo se vuelve
+           crema cuando `--oscuridad` es alta, y eso solo pasa donde lo de
+           atrás ya es de noche. Es un acoplamiento del que esta opacidad
+           depende, no una holgura. */
+        transparent 60%
+      );
+    }
+    .tinta-barra,
+    .enlace-barra:hover {
+      color: color-mix(
+        in oklab,
+        var(--color-tinta),
+        var(--color-crema) calc(var(--oscuridad) * 100%)
+      );
+    }
+    .enlace-barra {
+      color: color-mix(
+        in oklab,
+        var(--color-tinta-2),
+        var(--color-bruma-2) calc(var(--oscuridad) * 100%)
+      );
+    }
+  }
+
+  /* En vez de un filete —que era la raya que cruzaba la pantalla— la barra
+     derrama su propio color unos píxeles hacia abajo y se corta. Separa sin
+     dibujar un borde. */
+  .barra-vidrio::after {
+    content: '';
+    position: absolute;
+    inset: 100% 0 auto 0;
+    height: 16px;
+    pointer-events: none;
+    /* El derrame se apaga con la hora: una sombra negra bajo una barra
+       oscura no separa nada, solo ensucia el cristal. */
+    background: linear-gradient(
+      to bottom,
+      rgb(0 0 0 / calc(0.06 * (1 - var(--oscuridad, 0)))),
+      transparent
+    );
+  }
+
+  .fondo-hora { background-color: var(--hora-fondo); }
+  .texto-hora { color: var(--hora-tinta); }
+  .texto-2-hora { color: var(--hora-tinta-2, var(--color-tinta-2)); }
+  .borde-hora { border-color: var(--hora-filete, var(--color-arena-3)); }
+
+  /* Hero y carretera sin runtime de animación. Las líneas de tiempo CSS se
+     ejecutan en el compositor y el estado estático sigue siendo legible en
+     navegadores que todavía no soportan scroll/view timelines. */
+  @keyframes hero-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes hero-natura-entra {
+    from { opacity: 0; transform: translateY(8%); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes hero-wordmark-entra {
     from { opacity: 0; transform: translateY(18px); }
     to   { opacity: 1; transform: none; }
   }
-  .entra {
-    /* `backwards` y no `both`: durante la demora se aplica el estado inicial,
-       pero al terminar el elemento vuelve a su estilo propio, que es visible.
-       Con `both` un elemento cuya animación nunca arranca se queda escondido
-       para siempre. Acá el reposo natural es "se ve". */
-    animation: entrada-suave 0.85s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  @keyframes hero-ui-entra {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes hero-contenido-entra {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes hero-cielo-scroll {
+    from { transform: none; }
+    to   { transform: translateY(7%); }
+  }
+  @keyframes hero-natura-scroll {
+    from { transform: none; }
+    to   { transform: translateY(3%); }
+  }
+  @keyframes hero-foto-scroll {
+    from { transform: none; }
+    to   { transform: translateY(1.5%); }
+  }
+  @keyframes hero-wordmark-scroll {
+    from { transform: none; }
+    to   { transform: translateY(9%); }
+  }
+  @keyframes hero-ui-scroll {
+    0%, 55% { opacity: 1; }
+    100%    { opacity: 0; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-capa--cielo { animation: hero-fade 450ms ease-out both; }
+    .hero-sol { animation: hero-fade 400ms 50ms ease-out both; }
+    .hero-capa--natura {
+      animation: hero-natura-entra 750ms 220ms var(--ease-editorial) both;
+    }
+    .hero-capa--foto,
+    .hero-oclusion { animation: hero-fade 600ms 720ms ease-out both; }
+    .hero-wordmark-entra {
+      animation: hero-wordmark-entra 900ms 1050ms var(--ease-editorial) both;
+    }
+    .hero-etiqueta {
+      animation: hero-ui-entra 400ms calc(1700ms + var(--i) * 60ms) ease-out both;
+    }
+    .hero-contenido-entra {
+      animation: hero-contenido-entra 650ms 1450ms var(--ease-editorial) both;
+    }
+
+    @supports (animation-timeline: scroll()) {
+      .hero-parallax--cielo {
+        animation: hero-cielo-scroll linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 100svh;
+      }
+      .hero-parallax--natura {
+        animation: hero-natura-scroll linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 100svh;
+      }
+      .hero-parallax--foto {
+        animation: hero-foto-scroll linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 100svh;
+      }
+      .hero-wordmark-scroll {
+        animation: hero-wordmark-scroll linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 100svh;
+      }
+      .hero-ui-scroll {
+        animation: hero-ui-scroll linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 100svh;
+      }
+    }
+
   }
 
-  /* Reveal al entrar en pantalla, SIN JavaScript.
-     Usa animation-timeline: view(), que ata la animación a la posición del
-     elemento en el viewport y la resuelve el compositor. Donde no está
-     soportado (Safari, Firefox) simplemente no hay animación y el contenido se
-     ve, que es exactamente el comportamiento que queremos: ya me pasó dos veces
-     dejar contenido invisible porque una animación de JS no llegó a correr. */
-  .aparece {
-    --entrada-desde: 4%;
-    --entrada-hasta: 42%;
+  /* EL RECORRIDO A SOL DE BAMBÚ.
+     El video queda clavado a la pantalla y el scroll escribe su tiempo desde
+     Camino.tsx. Los mensajes solo usan transform + opacity; el fondo no lleva
+     velo ni degradado, para que la toma conserve la luz que ya fue dirigida en
+     el propio video. */
+  .camino-lienzo,
+  .camino-poster-inicio,
+  .camino-poster-final {
+    transform: translateZ(0);
   }
+  .camino-mensaje {
+    text-shadow:
+      0 2px 8px rgb(7 11 24 / 0.7),
+      0 10px 34px rgb(7 11 24 / 0.52);
+    will-change: transform, opacity;
+  }
+  .camino-mensaje--llegada {
+    padding-right: min(42vw, 34rem);
+  }
+
+  @media (max-width: 639px) {
+    .camino-recorrido { height: 330svh; }
+    .camino-poster-inicio,
+    .camino-poster-final {
+      object-position: 50% center;
+    }
+    .camino-mensaje--llegada { padding-right: 1.25rem; }
+  }
+
+  /* ═══ MOTION ══════════════════════════════════════════════════════
+     Tres gestos y ninguno más.
+
+     1. LO QUE ENTRA — texto, listas, fotos, la luz de la fogata. Se dispara
+        UNA vez, cuando la pieza asoma, y se queda puesto: es una animación de
+        reloj, no un cursor de scroll. Subir la página no deshace nada.
+     2. LO QUE SIGUE AL SCROLL — la máscara que destapa una foto, la cámara
+        que se acerca lentísimo, el cielo que deriva. Esos sí son cursores:
+        van y vienen con el recorrido, como el paisaje por la ventanilla, y
+        ahí eso es lo correcto.
+     3. Nada de esto es lo que hace visible el contenido. Sin JavaScript, sin
+        soporte o con movimiento reducido, la página se ve entera. */
+  /* LA ENTRADA. Un desplazamiento de verdad, no un fundido con un empujón.
+     Los 22px de antes se leían como "estaba y se encendió"; a 40 ya se lee
+     como que la pieza VIENE de algún lado, que es lo que hace que el ojo la
+     siga hasta su sitio.
+
+     De dónde viene lo deciden dos variables, y como las variables CSS se
+     heredan, ponerlas en la columna basta para que entre entera desde el mismo
+     lado: el texto de la izquierda entra por la izquierda, las fotos de la
+     derecha por la derecha. Eso es lo que convierte cinco entradas sueltas en
+     una sola composición que se arma. */
+  /* Dos números movidos, y los dos por el mismo motivo: lo que se leía como
+     tosco no era la curva, era el RECORRIDO. Cuarenta píxeles con una curva
+     que arranca fuerte hacen que casi todo el desplazamiento ocurra en los
+     primeros ciento cincuenta milisegundos: el ojo ve un salto y después una
+     cola larga que ya no se mueve. Veintidós píxeles con una curva
+     exponencial —la misma de la galería, que sale rápido y se posa muy
+     largo— recorren menos y frenan durante más tiempo, y eso es lo que se
+     siente como que la pieza se posa en vez de aterrizar de golpe. */
+  @keyframes entrada-suave {
+    from {
+      opacity: 0;
+      transform: translate3d(var(--desde-x, 0px), var(--desde-y, 22px), 0);
+    }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* Las distancias son de las que se notan sin marear: 64px cruzan lo justo
+     para leerse como recorrido y no como salto. En el eje vertical el número
+     es menor porque hacia abajo hay menos sitio antes de que la pieza se
+     salga de su propia caja. */
+  .desde-izq   { --desde-x: -38px; --desde-y: 0px; }
+  .desde-der   { --desde-x: 38px;  --desde-y: 0px; }
+  .desde-abajo { --desde-x: 0px;   --desde-y: 28px; }
+
+  /* 2. La foto: una máscara vertical que la destapa de arriba abajo. Es
+     el gesto editorial —como pasar la mano sobre una copia impresa— y
+     reemplaza al fade genérico. El radio viaja dentro del clip-path
+     para que las esquinas redondeadas no se pierdan durante el barrido. */
+  @keyframes revelar-marco {
+    from { clip-path: inset(0 0 100% 0 round var(--radio-marco, 1rem)); }
+    to   { clip-path: inset(0 0 0 0 round var(--radio-marco, 1rem)); }
+  }
+
+  /* 3. La cámara: 6% de acercamiento durante la entrada. El tope que
+     admite el sistema — más que eso ya se lee como zoom y distrae. */
+  @keyframes respirar {
+    from { transform: scale(1.06); }
+    to   { transform: scale(1); }
+  }
+
+  /* LA ENTRADA DE LAS LÁMINAS.
+     Va en un envoltorio propio y no en la lámina: la lámina ya lleva su
+     transform de estado (escala, rotación, altura según la distancia al
+     centro) y dos animaciones sobre la misma propiedad se pisan. Afuera la
+     entrada, adentro el estado.
+
+     `backwards` y no `both`: el reposo de la lámina es "se ve". Y todo el
+     escalonado termina antes del segundo — con seis láminas el retraso máximo
+     es de 420ms más 560 de animación. */
+  @keyframes entrada-lamina {
+    from { opacity: 0; transform: translate3d(0, 30px, 0); }
+    to   { opacity: 1; transform: none; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .entra-lamina {
+      animation: entrada-lamina 560ms var(--ease-lamina) backwards;
+      animation-delay: calc(var(--orden, 0) * 55ms + 90ms);
+    }
+  }
+
+  /* LA MEDIDA DE LA CINTA.
+     Vive en CSS y no en el componente porque cambia por breakpoint, y una
+     variable en un `style` en línea no admite media queries.
+
+     La caja de la lámina es la MISMA para todas —lo que encoge a las
+     laterales es un `scale`—, así que este ancho es también el paso de la
+     cinta: centrar la lámina n es multiplicar. */
+  .galeria {
+    /* El `min()` con `svh` es lo que hace que la sección quepa en una
+       pantalla: en un laptop bajo la lámina se achica por altura antes que
+       por ancho, y la ficha de abajo no se sale de cuadro. */
+    --lamina-w: clamp(280px, min(29vw, 43svh), 450px);
+    --hueco: clamp(28px, 2.6vw, 46px);
+  }
+  @media (max-width: 639px) {
+    .galeria {
+      /* En un teléfono la activa ocupa casi todo el ancho y las vecinas
+         asoman por los costados: es la única lectura posible a 390px. */
+      --lamina-w: 84vw;
+      --hueco: 14px;
+    }
+  }
+
+  /* LA PILA DE CARTAS (ver componentes/ui/PilaArrastrable.tsx).
+
+     Cada carta es una foto montada: passe-partout de crema, filete de arena y
+     el título debajo en versalitas de terracota. Los tres colores salen de la
+     mitad de día de la página, que es donde vive esta sección — un borde
+     genérico gris habría sido lo único de la pantalla sin relación con nada.
+
+     `left`/`top` colocan la carta y la traslación de −50% la centra sobre ese
+     punto: así el reparto se escribe en porcentajes de la mesa y aguanta
+     cualquier ancho, mientras el arrastre —que sí es en píxeles— vive en
+     `translate`, una propiedad aparte que no tiene que saber nada de esto. */
+  .carta-pila {
+    /* Los márgenes negativos centran la carta sobre su punto de reparto. Los
+       dos van en % del ANCHO de la mesa —así los resuelve CSS también para el
+       vertical—, y por eso el de arriba no es la mitad del de al lado: la
+       carta mide 1.25 de alto por cada 1 de ancho, más el pie, o sea alrededor
+       de 1.4 veces su propio ancho. La mitad de eso es 0.7.
+
+       El ancho de la carta cambia con la pantalla porque la mesa cambia de
+       forma: apaisada en escritorio, casi cuadrada en tableta y vertical en el
+       teléfono. Una carta del 30% en una mesa de 350px sería una estampilla. */
+    width: var(--carta-w);
+    margin-left: calc(var(--carta-w) / -2);
+    margin-top: calc(var(--carta-w) * -0.7);
+    padding: 0.6rem 0.6rem 0.5rem;
+    border-radius: 12px;
+    background-color: var(--color-crema);
+    border: 1px solid var(--color-arena-3);
+    box-shadow: 0 14px 34px rgb(16 27 45 / 0.14);
+    cursor: grab;
+    /* El navegador se queda con el eje vertical; ver la nota del componente. */
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+    transform: rotateX(0deg) rotateY(0deg);
+    transition:
+      transform 260ms var(--ease-suave),
+      scale 260ms var(--ease-suave),
+      box-shadow 260ms var(--ease-suave);
+  }
+  .carta-pila:hover { scale: 1.02; }
+  .pila { --carta-w: 52%; }
+  @media (min-width: 640px) { .pila { --carta-w: 40%; } }
+  @media (min-width: 1024px) { .pila { --carta-w: 30%; } }
+  /* Mientras el dedo la lleva no interpola nada: la carta tiene que estar
+     donde está el puntero, no acercándose a donde estaba hace un cuarto de
+     segundo. Es la misma regla que la cinta de la galería durante el gesto. */
+  .carta-pila[data-arrastrando] {
+    cursor: grabbing;
+    scale: 1.045;
+    box-shadow: 0 28px 60px rgb(16 27 45 / 0.26);
+    transition: none;
+    z-index: 50 !important;
+  }
+  .carta-pila-marco {
+    display: block;
+    overflow: hidden;
+    border-radius: 7px;
+    background-color: var(--color-arena-2);
+  }
+  /* El destello: una lámina de luz que cruza la carta al volcarla. Va en
+     `screen` y no en blanco plano para que aclare la foto en vez de lavarla. */
+  .carta-pila-brillo {
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    opacity: var(--brillo, 0);
+    background: linear-gradient(115deg, transparent 30%, rgb(255 255 255 / 0.9), transparent 70%);
+    transition: opacity 260ms var(--ease-suave);
+  }
+
+  /* La línea del fondo. `--despejado` va de 0 a 1 según cuántas cartas se
+     hayan apartado, y de ahí salen las tres cosas que cambian: cuánto se ve,
+     cuánto pesa y cuánto separa. Que crezca al despejarse no es un efecto —es
+     que la frase estaba tapada y ahora no. */
+  .pila-cierre {
+    opacity: calc(0.16 + var(--despejado, 0) * 0.84);
+    scale: calc(0.94 + var(--despejado, 0) * 0.06);
+    letter-spacing: calc(var(--despejado, 0) * 0.01em);
+    transition:
+      opacity 620ms var(--ease-editorial),
+      scale 620ms var(--ease-editorial);
+  }
+
+  /* LA FOTO QUE DERIVA BAJO EL PUNTERO.
+     La lámina del centro deja de ser una imagen quieta: el encuadre se corre
+     un poco hacia donde está el cursor. Es paralaje, y es lo que hace que la
+     lámina se lea como una ventana y no como una estampa pegada.
+
+     El 6% de sobreescala no es decorativo, es la condición para que esto
+     exista: la foto llena su marco exactamente, así que cualquier
+     desplazamiento descubriría el borde. Con la foto un 6% más grande sobran
+     unos diez píxeles por lado, y el recorrido —la mitad del ancho partida
+     por treinta, cinco o seis píxeles— cabe dentro con margen.
+
+     Los 240ms tampoco son un adorno. Sin transición la foto se pega al cursor
+     y el efecto se vuelve un puntero gigante; con este retraso el encuadre
+     va detrás de la mano, que es lo que se lee como deriva y no como
+     seguimiento. */
+  .lamina-foto {
+    /* `scale` y `translate` como propiedades independientes, y el
+       desplazamiento escrito en píxeles desde JS — nunca `var()` dentro de un
+       `transform` que transiciona. Es el mismo agujero de Chrome que la cinta
+       de esta galería ya documenta: la cadena cambia, el navegador deja de
+       reevaluarla y la matriz se queda clavada en la anterior. Aquí se veía
+       como una foto que no se movía nunca. */
+    scale: 1.06;
+    transition: translate 240ms var(--ease-suave);
+  }
+
+  /* El cambio de ficha: el mismo gesto que la entrada de las láminas, más
+     corto y con menos recorrido. Es información que se sustituye, no que
+     llega. */
+  @keyframes entrada-ficha {
+    from { opacity: 0; transform: translate3d(0, 11px, 0); }
+    to   { opacity: 1; transform: none; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .entra-ficha { animation: entrada-ficha 480ms var(--ease-lamina) both; }
+  }
+
+  /* `.aparece` ya no necesita medidas propias: el disparo lo da el observador
+     y el recorrido lo pone el reloj. Queda como marca de "esto entra". */
+  /* El estado de reposo ya recorta: si la animación no llega a correr —sin
+     soporte de `view()`, o con movimiento reducido— la foto igual queda con
+     sus esquinas. La animación solo mueve el borde inferior del recorte.
+     El recorte se lleva puesta la sombra del propio elemento, así que la
+     sombra va siempre en el envoltorio de afuera (ver `Marco`). */
+  .revela-marco {
+    --radio-marco: 1rem;
+    clip-path: inset(0 round var(--radio-marco));
+  }
+
+  /* LA TARJETA QUE SE INCLINA (ver componentes/ui/Tarjeta3D.tsx).
+
+     La perspectiva vive en el envoltorio y el giro en el cuerpo, y tienen que
+     ser dos elementos distintos: `perspective` se aplica a los HIJOS del
+     elemento que la declara, así que puesta en el mismo nodo que gira no hace
+     nada — el giro saldría plano, como una lámina que rota sin acercarse.
+
+     `preserve-3d` es lo que permite que lo de dentro tenga profundidad propia
+     en lugar de aplastarse contra el plano del cuerpo. De ahí viene una regla
+     que hay que respetar: el cuerpo NO puede recortarse —ni `overflow`, ni
+     `clip-path`—, porque cualquiera de las dos cosas aplana el subárbol y se
+     acabó la profundidad. Por eso el recorte de la foto sigue viviendo un
+     nivel más adentro, en `.revela-marco`.
+
+     Las dos duraciones son el detalle que separa esto de un juguete: mientras
+     el puntero está encima la tarjeta lo sigue casi sin retraso (70ms, lo
+     justo para que no tiemble con el ruido del ratón), y al salir vuelve al
+     plano con 420ms. Seguir es una respuesta; volver es un movimiento. */
+  .tarjeta3d { perspective: 1100px; }
+  .tarjeta3d-cuerpo {
+    transform-style: preserve-3d;
+    transform: rotateX(var(--giro-x, 0deg)) rotateY(var(--giro-y, 0deg));
+    transition: transform 420ms var(--ease-suave);
+  }
+  .tarjeta3d[data-sigue='si'] .tarjeta3d-cuerpo {
+    transition-duration: 70ms;
+  }
+  /* Lo que se despega del plano. 70px sobre una perspectiva de 1100 es un
+     paralaje pequeño —la foto se mueve un poco más que su propia sombra— y
+     eso es todo lo que hace falta: con más, la foto se sale de su marco al
+     inclinarse y el truco queda a la vista.
+
+     La condición es la misma que Tarjeta3D.tsx usa para decidir si registra
+     los escuchadores, y tiene que serlo: `translateZ` no es gratis aunque
+     nadie incline nada — acercar la foto 70px sobre una perspectiva de 1100 la
+     agranda un 6.8% de forma permanente. Donde el efecto no corre eso no es
+     profundidad, es una foto un 6.8% más grande que su caja, y en el teléfono
+     —donde ocupa el 92% del ancho— se sale del margen y la sección la recorta. */
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .tarjeta3d-alza { transform: translateZ(70px); }
+  }
+
+  /* ── LA ENTRADA, DE UNA SOLA PASADA ──────────────────────────────────
+     El disparo lo da un `IntersectionObserver` (ver `lib/entrada.ts`), que
+     escribe `data-entra`. Acá no hay línea de tiempo de scroll: una línea de
+     tiempo de scroll no dispara la animación, la RECORRE, y por eso al subir
+     deshacía todo lo que había entrado. Esto es una animación de reloj: corre
+     una vez, hacia adelante, y se queda.
+
+     Nada de esto esconde nada por su cuenta: si el atributo no está —sin JS,
+     sin `IntersectionObserver`, o con movimiento reducido— la página se ve
+     entera y estas reglas no existen. */
+  @media (prefers-reduced-motion: no-preference) {
+    [data-entra='espera'].aparece,
+    [data-entra='espera'].escalona > *,
+    [data-entra='espera'] .palabras > span {
+      opacity: 0;
+    }
+
+    [data-entra='si'].aparece,
+    [data-entra='si'].escalona > *,
+    [data-entra='si'] .palabras > span {
+      animation: entrada-suave var(--duracion-entrada, 820ms) var(--ease-lamina) both;
+    }
+
+    /* El escalonado va por reloj y no por recorrido: cada pieza espera su
+       turno desde que la fila entró en pantalla, no desde dónde está el
+       scroll. `--paso` es el tiempo entre una y la siguiente. */
+    [data-entra='si'].escalona > * {
+      animation-delay: calc(var(--i, 0) * var(--paso, 90ms));
+    }
+    [data-entra='si'] .palabras > span {
+      animation-delay: calc(var(--i, 0) * 62ms);
+      --duracion-entrada: 640ms;
+    }
+
+    /* La luz de la fogata también era un "aparecer" atado al scroll, y por
+       tanto también se apagaba al subir. Se prende una vez y se queda, que es
+       lo que hace una fogata. */
+    [data-entra='espera'].luz-fogata { opacity: 0; }
+    [data-entra='si'].luz-fogata {
+      animation: prender-fogata 1600ms var(--ease-suave) both;
+    }
+
+    /* EL REVELADO DE UNA FOTO. Tampoco podía ser un cursor de scroll, y acá
+       el daño se veía: el marco de "Todo esto es de ustedes" vive dentro de un
+       `sticky`, y un elemento pegajoso calcula su tramo sobre una posición que
+       él mismo congela. La máscara se quedaba clavada a media altura y la foto
+       aparecía cortada por la mitad, como si le faltara un pedazo. Disparada
+       una vez, el sticky deja de importar: la máscara sube hasta arriba y se
+       queda. */
+    [data-entra='espera'].revela-marco {
+      clip-path: inset(0 0 100% 0 round var(--radio-marco, 1rem));
+    }
+    [data-entra='si'].revela-marco {
+      animation: revelar-marco 900ms var(--ease-editorial) both;
+    }
+
+    /* Un titular partido en palabras entra POR palabra, no como bloque: si
+       además se moviera entero, el escalonado de dentro quedaría montado
+       sobre un desplazamiento que ya lo está tapando. */
+    [data-entra='si'].escalona > .palabras {
+      animation: none;
+      opacity: 1;
+    }
+    /* La demora de un bloque entero (`Aparece demora=`), en el mismo reloj. */
+    [data-entra='si'].aparece {
+      animation-delay: var(--demora, 0ms);
+    }
+
+    /* LAS CINCO FUGACES (ver `.fugaces` para el porqué de las dos capas).
+       Toda la escena cuelga de un único reloj, y por eso los tiempos están
+       escritos como una cuenta y no como cinco números sueltos: la última
+       estrella sale a `--ultima-salida` y tarda `--vuelo`, así que el relevo
+       se ata a esa suma. Escrito a mano, cambiar la duración del vuelo dejaba
+       a la cápsula encendiéndose sobre una estrella todavía en el aire.
+
+       Los 120ms que se restan no son un margen de seguridad al revés: el
+       último tramo del vuelo (del 70% al 100%) ya no mueve la estrella, solo
+       le baja la escala del golpe de llegada, y a esa altura está quieta en su
+       sitio. Medido: a 1555ms la quinta ya está en (0,0) con escala 1, o sea
+       que el relevo arranca con las cinco en reposo aunque su animación no
+       haya terminado formalmente.
+
+       Van en `.aterrizaje` y no en `.fugaces` porque la cápsula es HERMANA de
+       la capa de vuelo, no hija: declaradas en la capa, el relevo nunca le
+       habría llegado y la cápsula se habría encendido en el fotograma cero. */
+    .aterrizaje {
+      --vuelo: 1150ms;
+      --ultima-salida: 525ms;
+      --relevo: calc(var(--vuelo) + var(--ultima-salida) - 120ms);
+    }
+    [data-entra='si'] .fugaces {
+      animation: fugaces-relevo 380ms linear var(--relevo) both;
+    }
+    [data-entra='si'] .fugaz {
+      animation: fugaz-vuelo var(--vuelo) var(--ease-suave) var(--retraso, 0ms) both;
+    }
+    [data-entra='si'] .fugaz::before {
+      animation: fugaz-estela var(--vuelo) var(--ease-suave) var(--retraso, 0ms) both;
+    }
+    /* La cápsula espera a que aterrice la última y recién entonces se enciende.
+       `backwards` y no `both`: con `both` el último fotograma —`scale(1)`— se
+       queda pegado para siempre y le gana a `.enlace-resenas-google:active`,
+       o sea que la cápsula perdía el hundido al tocarla. Con `backwards` la
+       animación solo manda ANTES de correr, que es lo único que hace falta
+       para que no se vea mientras las estrellas todavía vuelan. */
+    [data-entra='si'] .capsula-aterriza {
+      animation: aparecer-capsula 340ms var(--ease-suave) var(--relevo) backwards;
+    }
+    [data-entra='espera'] .capsula-aterriza {
+      opacity: 0;
+    }
+  }
+
+  /* El vuelo. La curva la pone `--ease-suave`, que frena muy fuerte al final:
+     la estrella cruza el cielo de un tirón y se posa. El repunte de escala
+     entre el 70% y el 100% es el golpe de llegada — sin él la estrella no
+     aterriza, simplemente deja de moverse. */
+  @keyframes fugaz-vuelo {
+    0% {
+      transform: translate(var(--dx, -40vmin), var(--dy, -25vmin)) scale(0.5);
+      opacity: 0;
+    }
+    7% {
+      opacity: 1;
+    }
+    70% {
+      transform: translate(0, 0) scale(1.3);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* La estela se estira al salir y se recoge dentro de la estrella al llegar.
+     Termina en `scale: 0 1` y no en `opacity: 0` a secas para que lo último
+     que se vea sea la punta metiéndose en la estrella, no un rastro que se
+     desvanece donde está. */
+  @keyframes fugaz-estela {
+    0% {
+      scale: 0.15 1;
+      opacity: 0;
+    }
+    12% {
+      scale: 1 1;
+      opacity: 0.9;
+    }
+    64% {
+      opacity: 0.5;
+    }
+    100% {
+      scale: 0 1;
+      opacity: 0;
+    }
+  }
+
+  @keyframes fugaces-relevo {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+
+  @keyframes aparecer-capsula {
+    from { opacity: 0; transform: scale(0.94); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  /* Estos dos SÍ son cursores de scroll y tienen que serlo: no son entradas,
+     son gestos ligados al recorrido —la foto que se acerca despacio mientras
+     pasa, la máscara que la va destapando—. Que se deshagan al subir es lo
+     correcto ahí: siguen al scroll, como el paisaje por la ventanilla. */
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
-      .aparece {
-        animation: entrada-suave linear both;
+      .respira {
+        animation: respirar linear both;
         animation-timeline: view();
-        animation-range: entry var(--entrada-desde) entry var(--entrada-hasta);
+        animation-range: cover 0vh cover 85vh;
       }
+    }
+  }
+
+  /* EL TITULAR QUE SE ESCRIBE.
+     Cada palabra sube su propia altura de línea y no una distancia fija: en un
+     titular que va de 2.8rem en el teléfono a 5.4rem en escritorio, un
+     recorrido en píxeles se ve enorme abajo y no se ve arriba. En `em` el
+     gesto es el mismo en las dos puntas.
+
+     El reposo es "se ve": sin `view()` o con movimiento reducido no hay
+     animación y el titular queda escrito, que es como tiene que quedar. */
+  /* Las palabras usan la MISMA entrada que todo lo demás; lo único suyo es de
+     dónde vienen, y va en `em` y no en píxeles: en un titular que salta de
+     2.8rem a 5.4rem, una distancia fija se ve enorme abajo y no se ve arriba.
+     Entran empujadas desde la izquierda, que es hacia donde se lee. */
+  .palabras > span {
+    display: inline-block;
+    --desde-x: -0.34em;
+    --desde-y: 0.3em;
+  }
+
+  /* RECORTAR SIN ROMPER EL SCROLL.
+     `overflow: hidden` convierte al elemento en contenedor de scroll, y
+     `animation-timeline: view()` se ata al contenedor de scroll más
+     cercano: envolver una sección en overflow-hidden deja a todas sus
+     animaciones atadas a una caja que no se desplaza, y ninguna avanza.
+     `clip-path` recorta igual y no crea contenedor de scroll. */
+  .recorta     { clip-path: inset(0); }
+  .recorta-2xl { clip-path: inset(0 round 0.75rem); }
+  .recorta-3xl { clip-path: inset(0 round 1rem); }
+
+  /* La respuesta al toque: la única confirmación de que un botón recibió
+     el dedo antes de que WhatsApp tarde en abrir. */
+  .pulsable { transition: scale 150ms var(--ease-suave); }
+  .pulsable:active { scale: 0.975; }
+  @media (hover: none) {
+    .pulsable:active { scale: 0.96; }
+  }
+
+  /* ═══ AMBIENTE ════════════════════════════════════════════════════ */
+
+  /* El bambusal ya no enmarca todas las secciones: sobrevive una sola
+     vez, de un solo lado y muy bajo de opacidad, como textura gráfica.
+     La máscara evita que las cañas se corten a ras del borde. */
+  .bambusal {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 68%, transparent 96%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 68%, transparent 96%);
+  }
+  .bambu-lado {
+    -webkit-mask-image: linear-gradient(to right, black 30%, transparent 100%);
+    mask-image: linear-gradient(to right, black 30%, transparent 100%);
+  }
+
+  /* EL PANEL DE VIDRIO — las dos tarjetas del cierre.
+     Un borde plano de `filete` sobre el azul de la noche se lee como la celda
+     de una tabla. Esto es lo mismo pero con la luz puesta donde la pondría una
+     lámina de vidrio: el borde arranca claro arriba y se apaga hacia abajo, y
+     una línea de un píxel corre por el canto superior, que es el reflejo que
+     hace que la pieza parezca tener grosor.
+
+     El `border-image` no es adorno: un `border-color` sólido no admite
+     degradado, y sin degradado las cuatro aristas pesan igual y la tarjeta
+     vuelve a ser un rectángulo dibujado.
+
+     `backdrop-filter` en vez de un fondo opaco para que el campo de estrellas
+     de la noche siga viéndose detrás, movido: la tarjeta se apoya sobre el
+     cielo, no lo tapa. */
+  .panel-vidrio {
+    position: relative;
+    border-radius: 1.25rem;
+    /* Casi todo el color se fue: lo que sostiene la tarjeta ahora es el
+       desenfoque, no un plano de pintura. Con 42% de transparencia el panel
+       era un rectángulo azul más claro puesto sobre el cielo; con 78% el
+       cielo SE VE, movido y apagado, y eso es lo que hace que la pieza parezca
+       una lámina y no una zona. El `saturate` compensa el lavado que produce
+       cualquier desenfoque grande. */
+    background-color: color-mix(in oklab, var(--color-bosque), transparent 78%);
+    backdrop-filter: blur(20px) saturate(125%);
+    /* Sin `border`: el marco son cuatro cañas de verdad, dibujadas en `::after`
+       con la misma textura y el mismo grosor que la medianera. Un borde CSS,
+       por bien teñido que esté, sigue siendo una línea.
+
+       El radio baja de 1.25rem a 0.75rem: con 20px de curva, el arco de la
+       esquina le comía un mordisco visible a una caña de 15px. Un marco de
+       bambú de verdad es de esquina casi recta —las cañas se cruzan, no se
+       doblan— así que la forma acompaña al material. */
+    border-radius: 0.75rem;
+    /* `clip-path` y no `overflow: hidden` por lo de siempre: overflow crearía
+       un contenedor de scroll y ataría los timelines de sus hijos. */
+    clip-path: inset(0 round 0.75rem);
+    box-shadow: 0 24px 60px -24px rgb(4 8 20 / 0.75);
+  }
+
+  /* EL MARCO: CUATRO CAÑAS.
+     Las mismas variables que usa la medianera, o sea el mismo verde, el mismo
+     cilindro, los mismos nudos cada 76px y los mismos 15px de grosor. Lo único
+     que cambia es que aquí hay cuatro y se cierran.
+
+     Cada arista son DOS capas: los nudos ocupan los 15px completos y el tallo
+     va de 9px centrado dentro —de ahí los 3px de desplazamiento—, exactamente
+     como en la medianera. Los nudos van declarados antes que el tallo porque
+     en CSS la primera capa de fondo es la de ARRIBA, y una juntura pintada
+     debajo del tallo no se vería.
+
+     Sin máscara en las puntas, al revés que la medianera: allí la caña termina
+     en el aire y tiene que apagarse; aquí las cuatro se cruzan en las esquinas
+     y el marco se cierra. Las verticales quedan por delante de las
+     horizontales —van primero— y ese cruce es el que tendría un marco de caña
+     de verdad. */
+  .panel-vidrio::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.55;
+    background-repeat: no-repeat;
+    background-position:
+      /* izquierda */ left top,
+      left 3px top,
+      /* derecha */ right top,
+      right 3px top,
+      /* arriba */ left top,
+      left top 3px,
+      /* abajo */ left bottom,
+      left bottom 3px;
+    background-size:
+      15px 100%,
+      9px 100%,
+      15px 100%,
+      9px 100%,
+      100% 15px,
+      100% 9px,
+      100% 15px,
+      100% 9px;
+    background-image:
+      var(--cana-nudos), var(--cana-tallo), var(--cana-nudos), var(--cana-tallo),
+      var(--cana-nudos-h), var(--cana-tallo-h), var(--cana-nudos-h), var(--cana-tallo-h);
+  }
+
+  /* Cada dato de contacto: el icono en su placa y el texto al lado. La placa
+     existe para que los tres iconos ocupen el mismo ancho aunque sus dibujos
+     no lo hagan, y así los tres textos arrancan en la misma vertical. */
+  .dato-contacto {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    border-radius: 0.75rem;
+    transition:
+      color 200ms ease,
+      transform 220ms var(--ease-suave);
+  }
+  .dato-contacto__placa {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 0.7rem;
+    background-color: rgb(244 232 211 / 0.06);
+    border: 1px solid rgb(244 232 211 / 0.1);
+    color: var(--color-sol);
+    transition:
+      background-color 200ms ease,
+      border-color 200ms ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    a.dato-contacto:hover .dato-contacto__placa {
+      background-color: rgb(246 167 45 / 0.14);
+      border-color: rgb(246 167 45 / 0.35);
+    }
+  }
+
+  /* ═══ LAS CINCO FUGACES ═══════════════════════════════════════════
+     Al llegar a las reseñas, cinco estrellas cruzan el cielo en diagonal, se
+     frenan y se apagan justo donde va la calificación. La sección ya está
+     sobre el campo de estrellas de la noche: lo que hace la escena no es
+     inventar un cielo, es que ese cielo se mueva una vez.
+
+     ── Por qué hay dos juegos de estrellas y no uno ────────────────────
+     La cápsula de Google recorta con `clip-path` —es lo que hace el barrido
+     del hover, ver `.enlace-resenas-google`— y un recorte no se puede apagar
+     para una animación y encender después. Cualquier estrella que volara
+     DENTRO de la cápsula aparecería de golpe al cruzar su borde, en vez de
+     llegar volando.
+
+     Así que vuelan por fuera: `.fugaces` es una capa hermana, sin recortar,
+     que replica exactamente la maquetación de la capa de estrellas de la
+     cápsula —mismo `inset`, mismo `flex`, mismo `gap`, y el puntaje y el
+     texto puestos en `visibility: hidden` para que ocupen su sitio sin
+     verse—. Por construcción, las cinco que aterrizan caen sobre las cinco
+     de la cápsula sin que haya un solo número medido a mano. Cuando el vuelo
+     termina, una se apaga mientras la otra se enciende y el relevo no se ve.
+
+     ── El reposo es "se ve" ────────────────────────────────────────────
+     Sin `data-entra` —sin JS, sin observador, o con movimiento reducido— la
+     capa de vuelo se queda en `opacity: 0` y la cápsula está entera desde el
+     principio. La escena es un extra, nunca un requisito para ver el dato. */
+  .aterrizaje {
+    position: relative;
+    display: inline-flex;
+  }
+  .fugaces {
+    position: absolute;
+    /* El mismo `inset` que `.enlace-resenas-google__capa--estrellas`. */
+    inset: 0.375rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    pointer-events: none;
+    opacity: 0;
+  }
+  .fugaz {
+    position: relative;
+    display: inline-flex;
+  }
+  /* LA ESTELA. Sale del centro de la estrella hacia atrás, o sea hacia arriba
+     y a la izquierda, que es de donde viene.
+
+     Va en `rotate` y `scale` sueltos y no dentro de `transform`: las
+     propiedades individuales se componen en un orden fijo (scale, después
+     rotate), así que la estela se encoge hacia la estrella SIN perder la
+     inclinación. Escrito todo junto en `transform`, encogerla la enderezaba.
+
+     El `::before` cuelga de un `<span>` y no del `<svg>` de la estrella a
+     propósito: un SVG es un elemento reemplazado y sus pseudoelementos no se
+     dibujan. */
+  .fugaz::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    height: 1.5px;
+    width: var(--estela, 11rem);
+    transform-origin: 100% 50%;
+    rotate: var(--angulo, -35deg);
+    scale: 0 1;
+    border-radius: 999px;
+    background: linear-gradient(
+      to left,
+      color-mix(in oklab, var(--color-sol-vivo), transparent 10%),
+      color-mix(in oklab, var(--color-sol), transparent 55%) 38%,
+      transparent
+    );
+  }
+
+  /* Las cinco salidas. Nacen a distinta altura, distinta distancia y distinto
+     ángulo, y llegan escalonadas: cinco trayectorias paralelas y sincronizadas
+     se leen como una animación, no como un cielo. */
+  .fugaz:nth-child(1) { --dx: -38vmin; --dy: -24vmin; --angulo: -32deg; --estela: 11rem; --retraso: 0ms; }
+  .fugaz:nth-child(2) { --dx: -44vmin; --dy: -22vmin; --angulo: -27deg; --estela: 13rem; --retraso: 130ms; }
+  .fugaz:nth-child(3) { --dx: -34vmin; --dy: -26vmin; --angulo: -37deg; --estela: 10rem; --retraso: 265ms; }
+  .fugaz:nth-child(4) { --dx: -47vmin; --dy: -25vmin; --angulo: -28deg; --estela: 14rem; --retraso: 395ms; }
+  .fugaz:nth-child(5) { --dx: -36vmin; --dy: -28vmin; --angulo: -38deg; --estela: 11rem; --retraso: 525ms; }
+
+  /* LA CAÑA QUE SEPARA COLUMNAS.
+     El bambusal de arriba dibuja cañas en SVG porque tienen que curvarse y
+     echar hojas. Esta no: es una caña de pie, recta, haciendo de medianera
+     entre dos columnas de texto. Y para eso el SVG estorba — la separadora
+     tiene que medir lo que mida la fila de al lado, sea cual sea, y un
+     viewBox estirado a una altura arbitraria engorda los nudos y les cambia
+     la separación.
+
+     Con degradados no hay nada que estirar: el tallo es una franja vertical y
+     los nudos son un `repeating-linear-gradient` con el paso escrito en
+     píxeles, así que caen cada 76px tenga la caña el alto que tenga.
+
+     Tres detalles que la sacan de "línea verde":
+       · el tallo lleva un degradado a lo ANCHO —sombra, cuerpo, brillo,
+         sombra—, que es lo que lee el ojo como cilindro y no como raya;
+       · los nudos sobresalen un pelo del tallo, como las junturas de verdad,
+         y por eso la capa de nudos es más ancha que la del tallo;
+       · las dos puntas se disuelven, igual que el mapa de al lado: una caña
+         que termina en seco contra el aire vuelve a dibujar una caja. */
+  /* LA TEXTURA DE LA CAÑA, escrita UNA vez.
+     La medianera de "Cómo llegar" y el marco de las tarjetas de vidrio son la
+     misma caña, y tienen que seguir siéndolo: si el verde, el ahusado o el
+     paso de los nudos se escriben dos veces, basta tocar uno para que dejen de
+     ser el mismo bambú y la página tenga dos bambúes parecidos, que es peor
+     que tener uno solo.
+
+     Son cuatro capas y no dos porque el marco necesita las horizontales: el
+     tallo se sombrea A LO ANCHO de la caña y los nudos se repiten A LO LARGO,
+     así que una caña tumbada no es la misma imagen girada por CSS —hay que
+     cambiar de eje las dos cosas—. El grosor (15px de caña, 9px de tallo) y el
+     paso (76px) son idénticos en los dos ejes. */
+  .cana-separadora,
+  .panel-vidrio {
+    --cana: var(--color-cana);
+    /* De pie: nudos a lo alto, cilindro a lo ancho. */
+    --cana-nudos: repeating-linear-gradient(
+      to bottom,
+      transparent 0 70px,
+      color-mix(in oklab, var(--cana), white 12%) 70px 74px,
+      transparent 74px 76px
+    );
+    --cana-tallo: linear-gradient(
+      to right,
+      color-mix(in oklab, var(--cana), black 45%) 0%,
+      var(--cana) 40%,
+      color-mix(in oklab, var(--cana), white 30%) 58%,
+      color-mix(in oklab, var(--cana), black 38%) 100%
+    );
+    /* Tumbada: los mismos números, los dos ejes cambiados. */
+    --cana-nudos-h: repeating-linear-gradient(
+      to right,
+      transparent 0 70px,
+      color-mix(in oklab, var(--cana), white 12%) 70px 74px,
+      transparent 74px 76px
+    );
+    --cana-tallo-h: linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--cana), black 45%) 0%,
+      var(--cana) 40%,
+      color-mix(in oklab, var(--cana), white 30%) 58%,
+      color-mix(in oklab, var(--cana), black 38%) 100%
+    );
+  }
+
+  .cana-separadora {
+    width: 15px;
+    background-repeat: no-repeat;
+    background-position:
+      center top,
+      center top;
+    background-size:
+      15px 100%,
+      9px 100%;
+    background-image: var(--cana-nudos), var(--cana-tallo);
+    opacity: 0.55;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%);
+  }
+
+  /* EL MAPA SIN CAJA.
+     La fachada del mapa era un rectángulo con borde y esquinas redondeadas, o
+     sea exactamente la caja que sobraba en esta sección. Quitar el borde por sí
+     solo no alcanza: el fondo del panel termina igual en un canto recto y el
+     ojo dibuja el rectángulo que falta.
+
+     Esto lo disuelve por los cuatro lados. Son dos máscaras —una vertical y
+     otra horizontal— compuestas con `intersect`: cada una decide su eje y la
+     intersección apaga las cuatro esquinas a la vez. Con una sola máscara
+     diagonal o radial la disolución sería elíptica y se comería el centro,
+     que es donde vive el pin.
+
+     Va SOLO en la fachada. Cuando alguien hace clic, el iframe entra nítido y
+     con sus bordes enteros: a esa altura el mapa es una herramienta que se está
+     usando, y difuminarle las esquinas taparía la atribución de Google que va
+     abajo a la izquierda. */
+  .mapa-difuso {
+    -webkit-mask-image:
+      linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%),
+      linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%);
+    mask-image:
+      linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%),
+      linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+  }
+
+  /* LA DISOLUCIÓN AL PIE DEL ATARDECER.
+     La fotografía no termina: se deshace en la noche.
+
+     Antes eran tres paradas —noche, noche al 60%, transparente— y el problema
+     de tres paradas repartidas en línea recta es que el ojo encuentra dónde
+     empieza el velo: hay un punto en que la imagen deja de ser imagen y se ve
+     el canto. Con la rampa de abajo la opacidad crece despacio al principio y
+     rápido al final, que es la curva con la que se apaga la luz de verdad, y
+     ese canto no existe en ninguna altura.
+
+     Los porcentajes no son redondos a propósito: son los de una curva suave
+     muestreada, no paradas elegidas a ojo.
+
+     Dos cosas que la rampa anterior no tenía:
+
+     1. LA COLA OPACA. Antes la curva tocaba el opaco exactamente en el último
+        píxel, o sea que el final del degradado y el borde de la sección caían
+        en el mismo sitio: cualquier diferencia entre lo de arriba y lo de abajo
+        —redondeo, película de grano, un color mezclado en oklab— aterrizaba
+        sobre una línea recta de lado a lado y se veía como un escalón. Ahora la
+        noche se cierra al 8% de la altura y de ahí para abajo es plano: el
+        degradado termina de trabajar antes de llegar a la costura, y la costura
+        pasa entre dos planos idénticos.
+
+     2. LA COLA TRANSPARENTE. El otro extremo se aplana igual, con la pendiente
+        llegando a cero: la primera parada perceptible está al 16% en vez de al
+        12%, así que tampoco hay un punto donde el velo "empieza".
+
+     La altura la pone quien la usa. La secuencia emplea una rampa breve para
+     conservar la fotografía hasta el final y evitar una zona azul lavada. */
+  .disuelve-noche {
+    /* El color se nombra UNA vez y la forma la pone una máscara — igual que
+       `.disuelve-dia`. Antes eran trece paradas con el azul escrito a mano en
+       cada una, y eso es una costura esperando: basta que el token cambie
+       —como acaba de pasar al darle más vida al azul— para que la rampa
+       termine en un color y la sección empiece en otro. Con máscara no hay dos
+       sitios que puedan discrepar.
+
+       La cola inferior queda completamente opaca antes de la costura. Arriba,
+       la transparencia se sostiene más tiempo para que la disolución no se
+       confunda con desenfoque sobre la fotografía. */
+    background-color: var(--color-noche);
+    --rampa-noche: linear-gradient(
+      to top,
+      rgb(0 0 0) 0%,
+      rgb(0 0 0) 12%,
+      rgb(0 0 0 / 0.96) 24%,
+      rgb(0 0 0 / 0.82) 38%,
+      rgb(0 0 0 / 0.6) 52%,
+      rgb(0 0 0 / 0.36) 66%,
+      rgb(0 0 0 / 0.16) 80%,
+      rgb(0 0 0 / 0.04) 91%,
+      transparent 100%
+    );
+    -webkit-mask-image: var(--rampa-noche);
+    mask-image: var(--rampa-noche);
+  }
+
+  /* LA ENTRADA AL CAMINO — el reverso de `.disuelve-noche`.
+     Una fotografía a sangre no puede empezar de golpe contra una sección
+     clara: donde la página celeste termina y la toma empieza queda una raya
+     recta de lado a lado, y el ojo la lee como un corte de montaje y no como
+     una transición. Esto es el mismo velo, del derecho: arranca del color de
+     la hora y se abre hacia la foto.
+
+     La rampa es la misma curva muestreada, con colas planas en los dos
+     extremos —opaca hasta el 8%, con pendiente cero al llegar a transparente—
+     para que no haya un punto donde el velo empieza ni uno donde termina.
+
+     Va como máscara sobre un plano liso y no como degradado de color: así el
+     único sitio donde se nombra el color es `background-color`, y ese color es
+     `--hora-fondo`, o sea el que la página tenga en ese momento. Escrito como
+     trece paradas de `color-mix` habría que repetir la variable trece veces. */
+  .disuelve-dia {
+    background-color: var(--hora-fondo);
+    --rampa: linear-gradient(
+      to bottom,
+      rgb(0 0 0) 0%,
+      rgb(0 0 0) 8%,
+      rgb(0 0 0 / 0.978) 16%,
+      rgb(0 0 0 / 0.917) 24%,
+      rgb(0 0 0 / 0.827) 32%,
+      rgb(0 0 0 / 0.716) 40%,
+      rgb(0 0 0 / 0.594) 48%,
+      rgb(0 0 0 / 0.467) 56%,
+      rgb(0 0 0 / 0.344) 64%,
+      rgb(0 0 0 / 0.231) 72%,
+      rgb(0 0 0 / 0.135) 80%,
+      rgb(0 0 0 / 0.06) 88%,
+      rgb(0 0 0 / 0.012) 94%,
+      transparent 100%
+    );
+    -webkit-mask-image: var(--rampa);
+    mask-image: var(--rampa);
+  }
+
+  /* La sombra que reemplaza al velo negro del hero.
+     El pie del hero llevaba un plano de azul noche del 42% de la altura para
+     que el texto blanco se leyera sobre la foto. Cumplía, pero se veía: una
+     banda oscura cruzando el jardín justo donde la foto es más bonita. Esto
+     hace el mismo trabajo sin tocar la fotografía — la sombra viaja pegada a
+     las letras, mide unos pocos píxeles y no oscurece nada más. */
+  .sombra-legible {
+    text-shadow:
+      0 1px 2px rgb(6 10 20 / 0.6),
+      0 2px 16px rgb(6 10 20 / 0.5);
+  }
+
+  /* LA SOMBRA DEL PIE DEL HERO — una elipse, no una banda.
+     Quitar el velo del todo dejaba la línea de reseñas en 2.6:1 y la de
+     ubicación en 2.4:1 sobre el pasto: ilegibles de verdad, no al límite. La
+     sombra tiene que volver, pero no tiene por qué ser un rectángulo.
+
+     Un degradado lineal de borde a borde deja un frente recto cruzando la
+     fotografía, y eso es lo que se veía. Este es radial y su centro está por
+     DEBAJO del borde inferior: lo que entra en pantalla es un arco, y un arco
+     no se lee como una capa puesta encima — se lee como la sombra que ya
+     tendría el jardín a esa hora. Solo cubre la esquina donde vive el texto;
+     la piscina, el quincho y el cerro llegan enteros hasta el borde.
+
+     Medido sobre esta foto, en las cuatro esquinas del bloque de texto la
+     opacidad cae entre 0.42 y 0.57, y con eso el peor contraste pasa de
+     2.4:1 a 5.2:1. */
+  .sombra-pie {
+    background: radial-gradient(
+      140% 66% at 30% 118%,
+      rgb(5 9 18 / 0.8) 0%,
+      rgb(5 9 18 / 0.62) 35%,
+      rgb(5 9 18 / 0.42) 60%,
+      rgb(5 9 18 / 0.18) 80%,
+      transparent 100%
+    );
+  }
+
+  /* Aquí vivía el campo de estrellas: tres capas de degradados radiales por
+     sección, con su titileo, sus constelaciones en SVG y su luna. Se fue
+     entero, y no por gusto — medido, eran quince capas de composición, 24
+     megapíxeles y unos 91 MB de textura en GPU (el cuádruple en una pantalla
+     retina), residentes todas a la vez. Era la razón de que la mitad de noche
+     fuera a tirones y de que el FAQ, que además lleva un `sticky` dentro,
+     fuera el peor tramo de la página.
+
+     Lo que queda en su lugar es el azul liso con su grano, que es lo que la
+     mitad de noche necesitaba desde el principio. */
+
+  .sol-halo {
+    background: radial-gradient(
+      circle,
+      rgb(255 236 180 / 0.5) 0%,
+      rgb(246 167 45 / 0.2) 32%,
+      rgb(246 167 45 / 0.06) 56%,
+      transparent 72%
+    );
+  }
+  @keyframes sol-revela {
+    0%   { translate: 0 -8%; scale: 0.86; opacity: 0.18; }
+    14%  { translate: 0 0;   scale: 1;    opacity: 0.6; }
+    52%  { translate: 0 16%; scale: 1;    opacity: 0.56; }
+    76%  { translate: 0 28%; scale: 0.9;  opacity: 0; }
+    100% { translate: 0 32%; scale: 0.88; opacity: 0; }
+  }
+
+  /* LA LUZ DE LA FOGATA. No es fuego simulado: es un halo cálido que
+     crece desde el borde de la foto cuando la sección entra en pantalla,
+     como la luz que esa foto proyectaría sobre la página. */
+  @keyframes prender-fogata {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .sol-halo--centro {
+        animation: sol-revela linear both;
+        animation-timeline: view();
+        animation-range: cover 0% cover 100%;
+      }
+    }
+  }
+
+  @media (max-width: 767px) {
+    .bambu-cana--amplia { display: none; }
+  }
+
+  /* La barra de avance del scroll. Pura CSS: sin listener, sin estado.
+     Arranca en scaleX(0), de modo que donde `scroll()` no existe la
+     barra simplemente no se ve — nunca aparece llena y mintiendo. */
+  @keyframes avanzar { from { scale: 0 1; } to { scale: 1 1; } }
+  .progreso-scroll { transform-origin: 0 50%; scale: 0 1; }
+  @supports (animation-timeline: scroll()) {
+    .progreso-scroll {
+      animation: avanzar linear both;
+      animation-timeline: scroll(root block);
     }
   }
 
@@ -156,23 +1746,59 @@
     0%, 100% { transform: scale(1); opacity: 0.5; }
     50%      { transform: scale(1.5); opacity: 0; }
   }
-  .anima-latido { animation: latido-suave 2.4s ease-out infinite; }
+  /* Tres pulsos y para: el botón de WhatsApp está fijo toda la sesión, y
+     un latido infinito deja de ser una llamada de atención. */
+  .anima-latido { animation: latido-suave 2.4s ease-out 3; }
 
-  @keyframes rebote-flecha {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(6px); }
+  @keyframes surgir { from { opacity: 0; } to { opacity: 1; } }
+  .surge { animation: surgir 200ms var(--ease-suave) both; }
+
+  @keyframes surgir-menu {
+    from { opacity: 0; translate: 0 -10px; }
+    to   { opacity: 1; translate: 0 0; }
   }
-  .anima-flecha { animation: rebote-flecha 2s ease-in-out infinite; }
+  .surge-menu { animation: surgir-menu 240ms var(--ease-suave) both; }
+
+  /* EL ACORDEÓN DEL FAQ.
+     `<details>` nativo —se abre con teclado, lo lee cualquier lector de
+     pantalla y funciona sin JS—, con el despliegue animado por CSS a
+     través de `::details-content` e `interpolate-size`. Donde no está
+     soportado, se abre de golpe con el contenido entrando en un fundido
+     corto, que es exactamente lo que hacía antes. */
+  @supports selector(::details-content) {
+    @media (prefers-reduced-motion: no-preference) {
+      details::details-content {
+        block-size: 0;
+        overflow: clip;
+        transition:
+          block-size 480ms var(--ease-editorial),
+          content-visibility 480ms allow-discrete;
+      }
+      details[open]::details-content { block-size: auto; }
+    }
+  }
+  @keyframes faq-abre {
+    from { opacity: 0; translate: 0 -6px; }
+    to   { opacity: 1; translate: 0 0; }
+  }
+  @supports not selector(::details-content) {
+    .faq-cuerpo > * { overflow: hidden; }
+    details[open] .faq-cuerpo > * {
+      animation: faq-abre 280ms var(--ease-suave) both;
+    }
+  }
 
   /* Grano sobre las fotos a sangre: mata el banding de los cielos
-     degradados, que en un fondo oscuro se nota mucho más. */
+     degradados. SIN `mix-blend-mode` — un blend obliga al navegador a
+     releer el fondo y recomponerlo cada vez que la caja se mueve, y con
+     ocho secciones a pantalla completa era la razón principal de que el
+     scroll se sintiera pastoso. */
   .textura-grano::after {
     content: "";
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.12;
-    mix-blend-mode: overlay;
+    opacity: 0.05;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23r)'/%3E%3C/svg%3E");
   }
 
@@ -180,11 +1806,54 @@
   .sin-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
 }
 
+/* Movimiento reducido significa MENOS movimiento, no ninguna transición.
+   Se apaga el movimiento espacial y se deja viva la respuesta cromática:
+   las transiciones de color no marean a nadie y sí sirven para entender
+   qué está pasando. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
+    transition-property: color, background-color, border-color, outline-color,
+      text-decoration-color, fill, stroke, opacity !important;
+    transition-duration: 200ms !important;
   }
+
+  .boton:hover { translate: none; }
+  .boton:hover .flecha { transform: none; }
+  .anima-latido { display: none !important; }
+
+  .camino-recorrido {
+    height: max(76svh, 560px) !important;
+  }
+  .camino-sticky {
+    position: relative;
+    height: max(76svh, 560px);
+  }
+  .camino-lienzo,
+  .camino-poster-inicio {
+    display: none;
+  }
+  .camino-poster-final {
+    display: block;
+  }
+  .camino-mensaje--inicio {
+    display: none;
+  }
+  .camino-mensaje--llegada {
+    opacity: 1 !important;
+    transform: none !important;
+    padding-right: 1.25rem;
+  }
+}
+
+/* La barra se aparta mientras corre la intro del hero y vuelve pronto. El
+   temporizador vive en Hero.tsx; el fundido de vuelta va en la lista de
+   transición del propio header. */
+html.intro-hero header,
+html.intro-hero nav {
+  opacity: 0 !important;
+  pointer-events: none;
 }

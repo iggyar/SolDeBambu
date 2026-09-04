@@ -8,13 +8,15 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "tsc --noEmit",
+    "test": "node --test tests/reserva.test.ts",
+    "check": "npm run lint && npm run test && npm run build",
     "fotos": "node scripts/optimizar-fotos.mjs",
     "mascara": "node scripts/generar-mascara.mjs",
-    "secuencia": "node scripts/preparar-secuencia.mjs"
+    "secuencia": "node scripts/preparar-secuencia.mjs",
+    "intro": "node scripts/optimizar-intro.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.546.0",
-    "motion": "^12.23.24",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

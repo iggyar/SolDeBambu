@@ -77,5 +77,58 @@ export const FOTOS: Record<string, MedidasFoto> = {
       1200
     ],
     "proporcion": 1.3333
+  },
+  "fogata": {
+    "anchos": [
+      640,
+      960
+    ],
+    "proporcion": 1.3333
+  },
+  "sala-juegos": {
+    "anchos": [
+      640,
+      960
+    ],
+    "proporcion": 1.3333
+  },
+  "campo-futbol": {
+    "anchos": [
+      640,
+      1024,
+      1280
+    ],
+    "proporcion": 0.75
+  },
+  "piscina-hamacas": {
+    "anchos": [
+      640,
+      960
+    ],
+    "proporcion": 1.3333
+  },
+  "comedor-bambu": {
+    "anchos": [
+      640,
+      960
+    ],
+    "proporcion": 1.3333
+  },
+  "altillo-ventana": {
+    "anchos": [
+      640,
+      1024,
+      1080
+    ],
+    "proporcion": 1.3333
+  },
+  "cielo-nocturno": {
+    "anchos": [
+      1024,
+      1600,
+      2048,
+      2560
+    ],
+    "proporcion": 0.6667
   }
 };

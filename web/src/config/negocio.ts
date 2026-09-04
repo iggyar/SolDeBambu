@@ -43,9 +43,6 @@ export const NEGOCIO = {
     total: 20,
   },
 
-  /** Precio ancla que se repite en el hero y en la barra móvil. */
-  precioDesde: 530,
-
   /**
    * La foto protagonista del hero, y su máscara de oclusión.
    *
@@ -75,9 +72,9 @@ export const NEGOCIO = {
   },
 
   reseñasGoogle: {
-    /** ⚠️ PENDIENTE de confirmar con la ficha real. */
-    puntaje: 5.0,
-    total: 5,
+    /** Completar solo después de comprobar ambos datos en la ficha real. */
+    puntaje: null as number | null,
+    total: null as number | null,
     enlace: 'https://maps.app.goo.gl/i6i8R6WYBqrAnaMS7',
   },
 

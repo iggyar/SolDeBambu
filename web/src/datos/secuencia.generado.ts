@@ -5,14 +5,14 @@ export type JuegoCuadros = {cuadros: number; ancho: number; alto: number};
 
 export const SECUENCIA: Record<'esc' | 'mov', JuegoCuadros> = {
   "esc": {
-    "cuadros": 36,
-    "ancho": 1100,
-    "alto": 814
+    "cuadros": 72,
+    "ancho": 1280,
+    "alto": 720
   },
   "mov": {
-    "cuadros": 24,
-    "ancho": 640,
-    "alto": 474
+    "cuadros": 44,
+    "ancho": 540,
+    "alto": 720
   }
 };
 

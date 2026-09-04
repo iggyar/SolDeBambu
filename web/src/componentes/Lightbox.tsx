@@ -13,29 +13,56 @@ type Props = {
 export function Lightbox({fotos, indice, alCambiar, alCerrar}: Props) {
   const contenedor = useRef<HTMLDivElement>(null);
   const inicioTacto = useRef<number | null>(null);
+  const estado = useRef({fotos, indice, alCambiar, alCerrar});
+  estado.current = {fotos, indice, alCambiar, alCerrar};
   const foto = fotos[indice];
 
-  const anterior = () => alCambiar((indice - 1 + fotos.length) % fotos.length);
-  const siguiente = () => alCambiar((indice + 1) % fotos.length);
+  const anterior = () => {
+    const actual = estado.current;
+    actual.alCambiar((actual.indice - 1 + actual.fotos.length) % actual.fotos.length);
+  };
+  const siguiente = () => {
+    const actual = estado.current;
+    actual.alCambiar((actual.indice + 1) % actual.fotos.length);
+  };
 
   useEffect(() => {
+    const focoPrevio = document.activeElement as HTMLElement | null;
     const alTeclear = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') alCerrar();
+      if (e.key === 'Escape') estado.current.alCerrar();
       if (e.key === 'ArrowLeft') anterior();
       if (e.key === 'ArrowRight') siguiente();
+      if (e.key !== 'Tab') return;
+
+      const enfocables = Array.from(
+        contenedor.current?.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])',
+        ) ?? [],
+      );
+      if (enfocables.length === 0) return;
+      const primero = enfocables[0];
+      const ultimo = enfocables[enfocables.length - 1];
+      if (e.shiftKey && document.activeElement === primero) {
+        e.preventDefault();
+        ultimo.focus();
+      } else if (!e.shiftKey && document.activeElement === ultimo) {
+        e.preventDefault();
+        primero.focus();
+      }
     };
     window.addEventListener('keydown', alTeclear);
 
     // El fondo no se mueve mientras el visor está abierto.
     const scrollPrevio = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    contenedor.current?.focus();
+    contenedor.current?.querySelector<HTMLElement>('button')?.focus();
 
     return () => {
       window.removeEventListener('keydown', alTeclear);
       document.body.style.overflow = scrollPrevio;
+      focoPrevio?.focus();
     };
-  });
+  }, []);
 
   return (
     <div
@@ -43,6 +70,7 @@ export function Lightbox({fotos, indice, alCambiar, alCerrar}: Props) {
       role="dialog"
       aria-modal="true"
       aria-label={foto.alt}
+      aria-describedby="lightbox-pie"
       tabIndex={-1}
       onClick={alCerrar}
       onTouchStart={(e) => {
@@ -56,13 +84,13 @@ export function Lightbox({fotos, indice, alCambiar, alCerrar}: Props) {
         else if (recorrido < -55) siguiente();
         inicioTacto.current = null;
       }}
-      className="fixed inset-0 z-70 flex items-center justify-center bg-black/92 p-4 backdrop-blur-sm"
+      className="surge fixed inset-0 z-70 flex items-center justify-center bg-black/92 p-4 backdrop-blur-sm"
     >
       <button
         type="button"
         onClick={alCerrar}
         aria-label="Cerrar"
-        className="absolute top-4 right-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+        className="pulsable absolute top-4 right-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
       >
         <X size={20} />
       </button>
@@ -74,7 +102,7 @@ export function Lightbox({fotos, indice, alCambiar, alCerrar}: Props) {
           anterior();
         }}
         aria-label="Foto anterior"
-        className="absolute left-3 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:left-6"
+        className="pulsable absolute left-3 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:left-6"
       >
         <ChevronLeft size={22} />
       </button>
@@ -86,7 +114,7 @@ export function Lightbox({fotos, indice, alCambiar, alCerrar}: Props) {
           siguiente();
         }}
         aria-label="Foto siguiente"
-        className="absolute right-3 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:right-6"
+        className="pulsable absolute right-3 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:right-6"
       >
         <ChevronRight size={22} />
       </button>
@@ -102,7 +130,10 @@ export function Lightbox({fotos, indice, alCambiar, alCerrar}: Props) {
           sizes="(min-width: 1024px) 900px, 96vw"
           className="max-h-[75svh] w-auto rounded-xl object-contain"
         />
-        <figcaption className="max-w-2xl text-center text-sm leading-relaxed text-white/65">
+        <figcaption
+          id="lightbox-pie"
+          className="max-w-2xl text-center text-sm leading-relaxed text-white/65"
+        >
           {foto.alt}
           <span className="mt-2 block text-white/35">
             {indice + 1} / {fotos.length}

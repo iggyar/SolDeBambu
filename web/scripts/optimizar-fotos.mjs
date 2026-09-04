@@ -23,6 +23,31 @@ const DESTINO = path.resolve(process.cwd(), 'public/fotos');
 const MANIFIESTO = path.resolve(process.cwd(), 'src/datos/fotos.generado.ts');
 const ANCHOS_OBJETIVO = [640, 1024, 1600];
 
+/**
+ * Excepciones al tratamiento por defecto.
+ *
+ * El cielo estrellado no se puede comprimir como una fotografía de la
+ * propiedad. Una foto normal es superficies grandes de color parecido —césped,
+ * cielo, una pared— y ahí un WebP al 78 no se nota. Un campo de estrellas es lo
+ * contrario: ruido de alta frecuencia sobre un fondo casi plano, o sea miles de
+ * detalles de un píxel que no se parecen a sus vecinos. Es el peor caso posible
+ * para cualquier compresor, y al 78 las estrellas chicas simplemente
+ * desaparecen — el cielo queda liso y sucio.
+ *
+ * Va también a 2560 porque es la única foto de la página que se ve a sangre en
+ * pantalla completa: a 1600 en un monitor de 1920 se estaría ampliando, y una
+ * estrella ampliada deja de ser un punto y pasa a ser una mancha.
+ *
+ * La calidad la decidió una comparación a 1:1, no una corazonada: recortes de
+ * la misma zona a 80, 84, 88 y 92 puestos uno al lado del otro a tamaño real.
+ * A 80 las estrellas de un píxel siguen todas ahí y no aparece bloqueo en el
+ * fondo; de 80 a 92 el archivo se triplica (215 KB → 632 KB a 2048) para una
+ * diferencia que no se ve, y menos aún detrás de una máscara y al 55% de
+ * opacidad. */
+const ESPECIALES = {
+  'cielo-nocturno': {anchos: [1024, 1600, 2048, 2560], calidad: 80},
+};
+
 // Nombre original → nombre publicado. Renombrar acá y no en disco mantiene
 // intactos los archivos que el dueño tiene en su carpeta.
 const MAPA = {
@@ -39,6 +64,19 @@ const MAPA = {
   'solbambuadentro2.png': 'sala-escalera',
   'solbamuadentro3.png': 'dormitorio-dos',
   'solbambuadentro4.png': 'altillo',
+  // Tanda de agosto 2026: las áreas comunes, que hasta ahora la página nombraba
+  // en una lista de texto sin una sola foto que las respaldara.
+  'fogataprendida.png': 'fogata',
+  'salajuegoSolBambu.png': 'sala-juegos',
+  'arcofutbolsolbambu.png': 'campo-futbol',
+  'vistapisicnasolbambu.png': 'piscina-hamacas',
+  'saladeestarsb.png': 'comedor-bambu',
+  'amanecerdesdecabana.png': 'altillo-ventana',
+  // El cielo de la mitad de noche: la Vía Láctea, 5472x3648. Se renombra aquí
+  // y no en disco, como el resto — la carpeta del dueño se queda intacta. Si el
+  // archivo no está, este script lo avisa y sigue; la página no se rompe,
+  // simplemente no hay cielo.
+  'pexels-instawally-176851.jpg': 'cielo-nocturno',
 };
 
 await mkdir(DESTINO, {recursive: true});
@@ -55,15 +93,16 @@ for (const [archivo, nombre] of Object.entries(MAPA)) {
   const anchoOriginal = meta.width ?? 1600;
   const proporcion = (meta.height ?? 1) / anchoOriginal;
 
+  const especial = ESPECIALES[nombre];
   // Nunca agrandamos, y no repetimos un ancho ya cubierto por el original.
   const anchos = [...new Set(
-    ANCHOS_OBJETIVO.map((a) => Math.min(a, anchoOriginal)),
+    (especial?.anchos ?? ANCHOS_OBJETIVO).map((a) => Math.min(a, anchoOriginal)),
   )].sort((a, b) => a - b);
 
   for (const ancho of anchos) {
     await sharp(entrada)
       .resize({width: ancho, withoutEnlargement: true})
-      .webp({quality: 78, effort: 5})
+      .webp({quality: especial?.calidad ?? 78, effort: 6})
       .toFile(path.join(DESTINO, `${nombre}-${ancho}.webp`));
   }
 

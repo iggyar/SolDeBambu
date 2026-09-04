@@ -1,0 +1,18 @@
+{
+  "buildPath": "code",
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "web/src/index.css"
+        ],
+        "createdAt": "2026-09-04T04:36:25.909Z",
+        "reason": "Claude: no es una retícula ni un campo de líneas — son dos tiras de 4px (background-size: 4px 100%) pegadas a las aristas izquierda y derecha de .panel-vidrio, que dibujan los NUDOS de una caña de bambú, el motivo central del sitio. Comparte mecanismo (repeating-linear-gradient con paso fijo en px) con .cana-separadora del mismo archivo, y el paso va en px justamente para que dos tarjetas de distinto alto tengan los nudos a la misma distancia. No hay teselado en 2D."
+      }
+    ]
+  }
+}

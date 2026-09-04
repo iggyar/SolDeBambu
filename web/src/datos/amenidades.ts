@@ -1,82 +1,46 @@
 import {
   Beef,
-  Car,
   ChefHat,
+  Croissant,
   Flame,
-  Mountain,
-  TreePalm,
-  Umbrella,
-  Utensils,
+  Gamepad2,
+  Goal,
+  PawPrint,
+  Trees,
+  Volleyball,
   Waves,
 } from 'lucide-react';
 
 /**
- * Solo va acá lo que está confirmado por las fotos o por las reseñas de Google.
- * Nada de "wifi de alta velocidad" de relleno: una amenidad inventada que
- * después no está es una reseña de 3 estrellas esperando a pasar.
+ * Las áreas comunes, tal como las lista la ficha de la propiedad. Es una lista
+ * corta a propósito: acá se escanea, no se lee. El detalle largo de cada cosa
+ * ya está en las FAQ, y lo que no está confirmado no entra — una amenidad
+ * inventada que después no aparece es una reseña de 3 estrellas esperando.
  *
  * Lo que falta confirmar está listado abajo en PENDIENTES.
  */
 export const AMENIDADES = [
-  {
-    icono: Waves,
-    titulo: 'Piscina privada',
-    detalle: 'Para ustedes solos, con camastros y toldos de madera alrededor.',
-  },
-  {
-    icono: Beef,
-    titulo: 'Parrilla',
-    detalle: 'En el comedor techado. Ustedes traen el carbón.',
-  },
-  {
-    icono: ChefHat,
-    titulo: 'Horno de barro',
-    detalle: 'Para pizzas, pollo o pachamanca. Funciona a leña.',
-  },
-  {
-    icono: Flame,
-    titulo: 'Área de fogata',
-    detalle: 'El plan de la noche, cuando refresca y sale el cielo.',
-  },
-  {
-    icono: Utensils,
-    titulo: 'Comedor con techo de bambú',
-    detalle: 'Rústico y a la sombra, con mesa larga para todo el grupo.',
-  },
-  {
-    icono: TreePalm,
-    titulo: 'Jardín de palmeras',
-    detalle: 'Césped abierto de punta a punta, sin vecinos al costado.',
-  },
-  {
-    icono: Umbrella,
-    titulo: 'Toldos y camastros',
-    detalle: 'Sombra junto a la piscina para cuando el sol de Cañete pega fuerte.',
-  },
-  {
-    icono: Car,
-    titulo: 'Estacionamiento',
-    detalle: 'Dentro de la propiedad, sin dejar el auto en la calle.',
-  },
-  {
-    icono: Mountain,
-    titulo: 'Vista al valle',
-    detalle: 'Los cerros de Mala de un lado, el verde del valle del otro.',
-  },
+  {icono: Waves, texto: 'Piscina con sombrillas'},
+  {icono: Goal, texto: 'Campo de fulbito'},
+  {icono: Beef, texto: 'Parrilla equipada'},
+  {icono: Volleyball, texto: 'Espacio para vóley'},
+  {icono: ChefHat, texto: 'Horno artesanal'},
+  {icono: Gamepad2, texto: 'Ping pong y sapito'},
+  {icono: Flame, texto: 'Área de fogata'},
+  {icono: Croissant, texto: 'Cocina con menaje'},
+  {icono: Trees, texto: '5 000 m² de área verde'},
+  {icono: PawPrint, texto: 'Pet friendly'},
 ] as const;
 
 /**
- * ⚠️ PENDIENTE DE CONFIRMAR con el dueño. Cuando responda, se mueven a la
+ * ⚠️ PENDIENTE DE CONFIRMAR con el dueño. Cuando responda, se agregan a la
  * lista de arriba con su ícono y listo — no hay que tocar ningún componente.
  *
  *   ¿Hay wifi?
  *   ¿Agua caliente en las duchas?
- *   ¿Cocina equipada / refrigeradora dentro de la cabaña?
- *   ¿TV?
- *   ¿Cuántos baños tiene cada cabaña?
- *   ¿Toallas y ropa de cama incluidas?
- *   ¿Cuántos autos entran en el estacionamiento?
  *   ¿La piscina es temperada?
- *   ¿Hay juegos (ping-pong, vóley, fútbol)?
+ *   ¿Refrigeradora dentro de la cabaña?
+ *   ¿TV?
+ *   ¿Cuántos autos entran en la cochera?
  *   ¿La leña de la fogata la ponen ustedes o la lleva el huésped?
  */

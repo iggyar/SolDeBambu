@@ -1,0 +1,393 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-31T00:00:00.000Z",
+  "title": "Design System: Sol de Bambú",
+  "extensions": {
+    "colorMeta": {
+      "sol": {
+        "role": "primary",
+        "displayName": "Ámbar de las seis",
+        "canonical": "#F0A93C"
+      },
+      "sol-vivo": {
+        "role": "primary",
+        "displayName": "Ámbar encendido",
+        "canonical": "#FFC15E"
+      },
+      "tierra": {
+        "role": "primary",
+        "displayName": "Terracota de OSB",
+        "canonical": "#A8511F"
+      },
+      "musgo": {
+        "role": "secondary",
+        "displayName": "Musgo a pleno sol",
+        "canonical": "#7E9B6B"
+      },
+      "noche": {
+        "role": "neutral",
+        "displayName": "Verde bambú a contraluz",
+        "canonical": "#101323"
+      },
+      "noche-hondo": {
+        "role": "neutral",
+        "displayName": "Verde de fondo de valle",
+        "canonical": "#090B18"
+      },
+      "bosque": {
+        "role": "neutral",
+        "displayName": "Sombra de bambú",
+        "canonical": "#1A1E33"
+      },
+      "bosque-alto": {
+        "role": "neutral",
+        "displayName": "Bambú iluminado",
+        "canonical": "#262B45"
+      },
+      "filete": {
+        "role": "neutral",
+        "displayName": "Filete de hoja",
+        "canonical": "#333A5C"
+      },
+      "arena": {
+        "role": "neutral",
+        "displayName": "Arena lavada",
+        "canonical": "#E9F2F7"
+      },
+      "arena-2": {
+        "role": "neutral",
+        "displayName": "Arena en sombra",
+        "canonical": "#DBE9F1"
+      },
+      "arena-3": {
+        "role": "neutral",
+        "displayName": "Arena mojada",
+        "canonical": "#C0D8E6"
+      },
+      "tinta": {
+        "role": "neutral",
+        "displayName": "Tinta de cerro",
+        "canonical": "#17222E"
+      },
+      "tinta-2": {
+        "role": "neutral",
+        "displayName": "Tinta media",
+        "canonical": "#465868"
+      },
+      "tinta-3": {
+        "role": "neutral",
+        "displayName": "Tinta baja",
+        "canonical": "#6B7E90"
+      },
+      "bruma": {
+        "role": "neutral",
+        "displayName": "Bruma",
+        "canonical": "#E8E9F3"
+      },
+      "bruma-2": {
+        "role": "neutral",
+        "displayName": "Bruma media",
+        "canonical": "#A5A8C0"
+      },
+      "bruma-3": {
+        "role": "neutral",
+        "displayName": "Bruma baja",
+        "canonical": "#878AA4"
+      },
+      "whatsapp": {
+        "role": "tertiary",
+        "displayName": "Verde WhatsApp",
+        "canonical": "#25D366"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Wordmark",
+        "purpose": "Solo el wordmark del hero. Archivo al máximo de su eje de ancho, ocluido por el paisaje."
+      },
+      "headline": {
+        "displayName": "Titular de sección",
+        "purpose": "El titular que abre cada capítulo del día."
+      },
+      "title": {
+        "displayName": "Titular secundario",
+        "purpose": "Bloques dentro de una sección."
+      },
+      "body": {
+        "displayName": "Cuerpo",
+        "purpose": "Párrafos en Inter, contenidos a ~36rem de ancho."
+      },
+      "label": {
+        "displayName": "Ficha técnica",
+        "purpose": "Sobretítulos, kilómetros, horas y datos. Archivo comprimido a wdth 62, en versalitas."
+      },
+      "bajada": {
+        "displayName": "Bajada",
+        "purpose": "El párrafo de entrada a la sección. El escalón que faltaba entre el titular y el cuerpo."
+      }
+    },
+    "shadows": [
+      {
+        "name": "suave",
+        "value": "0 2px 8px rgba(0, 0, 0, 0.30)",
+        "purpose": "Apoyo mínimo para elementos pequeños sobre fondo oscuro."
+      },
+      {
+        "name": "media",
+        "value": "0 4px 12px rgba(0, 0, 0, 0.35), 0 16px 40px rgba(0, 0, 0, 0.40)",
+        "purpose": "Fotografía dentro del flujo."
+      },
+      {
+        "name": "alta",
+        "value": "0 8px 20px rgba(0, 0, 0, 0.40), 0 32px 70px rgba(0, 0, 0, 0.55)",
+        "purpose": "Collages en rombos y botón flotante. Exagerada a propósito: despega la foto de la página."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-suave",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "La única curva del sistema. Toda transición de interfaz la usa."
+      },
+      {
+        "name": "dur-presion",
+        "value": "150ms",
+        "purpose": "Cambios de color y compresión al presionar."
+      },
+      {
+        "name": "dur-movimiento",
+        "value": "300ms",
+        "purpose": "Desplazamientos y rotaciones de estado."
+      },
+      {
+        "name": "dur-piel",
+        "value": "500ms",
+        "purpose": "Reservada a la barra superior y la barra móvil, que cambian de piel con el scroll."
+      },
+      {
+        "name": "reveal-timeline",
+        "value": "animation-timeline: view()",
+        "purpose": "Las apariciones se atan al recorrido de scroll, no al reloj. Sin soporte, el contenido simplemente se ve."
+      },
+      {
+        "name": "escalona-paso",
+        "value": "2.5%",
+        "purpose": "Desfase de recorrido por ítem en listas escalonadas."
+      },
+      {
+        "name": "respira",
+        "value": "scale 1.07 → 1 sobre animation-range: cover 0% cover 100%",
+        "purpose": "El acercamiento lentísimo de la fotografía atado al scroll. El movimiento de la página es profundidad, no deslizamiento."
+      },
+      {
+        "name": "paralaje-hero",
+        "value": "cielo y:10% s:1.16 · natura y:6% s:1.12 · foto y:2% s:1.06",
+        "purpose": "Las tres capas del hero se separan al salir. La máscara de oclusión comparte el transform de la capa 3 o los árboles dejan de coincidir."
+      },
+      {
+        "name": "revelar-dia",
+        "value": "opacity + scale(0.955) + 14px",
+        "purpose": "Entrada de la mitad de día: se abre como luz que llega."
+      },
+      {
+        "name": "revelar-noche",
+        "value": "opacity + translateY(34px)",
+        "purpose": "Entrada de la mitad de noche: emerge de la oscuridad."
+      },
+      {
+        "name": "pulsable",
+        "value": "scale(0.97) en :active — 0.955 sin hover",
+        "purpose": "Respuesta al toque. Antes faltaba en 24 elementos, incluidos todos los CTA de WhatsApp."
+      },
+      {
+        "name": "ambiente",
+        "value": "mecer 11s · titilar 7s · sol-cae y derivas atadas a view()",
+        "purpose": "Bambú, estrellas y sol. Simplificado bajo 768px."
+      },
+      {
+        "name": "cortina-abre",
+        "value": "rotate 9-20deg + translate -58..-94vw + opacity, entry 20%..100%",
+        "purpose": "El bambu se abre en abanico y revela el sol. 6 bloques en escritorio, 2 en celular."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botón primario de noche",
+      "kind": "button",
+      "refersTo": "button-accent",
+      "description": "La acción principal sobre la mitad oscura. Ámbar sólido con el círculo de ícono invertido.",
+      "html": "<a class=\"ds-btn-accent\" href=\"#\">Consultar disponibilidad<span class=\"ds-btn-accent__chip\"><svg viewBox=\"0 0 24 24\" width=\"17\" height=\"17\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 17 17 7M7 7h10v10\"/></svg></span></a>",
+      "css": ".ds-btn-accent { display: inline-flex; align-items: center; gap: 12px; background: var(--color-sol, #F0A93C); color: var(--color-noche, #0E1512); font-family: Inter, system-ui, sans-serif; font-size: 1rem; font-weight: 600; text-decoration: none; border-radius: 9999px; padding: 16px 16px 16px 28px; transition: background-color 150ms cubic-bezier(0.16,1,0.3,1), scale 150ms cubic-bezier(0.16,1,0.3,1); } .ds-btn-accent:hover { background: var(--color-sol-vivo, #FFC15E); } .ds-btn-accent:active { scale: 0.97; } .ds-btn-accent:focus-visible { outline: 2px solid var(--color-sol, #F0A93C); outline-offset: 3px; } .ds-btn-accent__chip { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 9999px; background: var(--color-noche, #0E1512); color: var(--color-sol, #F0A93C); }"
+    },
+    {
+      "name": "Botón primario de día",
+      "kind": "button",
+      "refersTo": "button-light",
+      "description": "El botón del hero, sobre fotografía. Bruma sólida; el círculo interior vira a ámbar al hover.",
+      "html": "<a class=\"ds-btn-light\" href=\"#\">Reservar<span class=\"ds-btn-light__chip\"><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 17 17 7M7 7h10v10\"/></svg></span></a>",
+      "css": ".ds-btn-light { display: inline-flex; align-items: center; gap: 12px; background: var(--color-bruma, #EDE7DA); color: var(--color-noche, #0E1512); font-family: Inter, system-ui, sans-serif; font-size: 0.95rem; font-weight: 600; text-decoration: none; border-radius: 9999px; padding: 14px 14px 14px 24px; transition: background-color 300ms cubic-bezier(0.16,1,0.3,1), scale 150ms cubic-bezier(0.16,1,0.3,1); } .ds-btn-light:hover { background: #FFFFFF; } .ds-btn-light:active { scale: 0.97; } .ds-btn-light__chip { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 9999px; background: var(--color-noche, #0E1512); color: var(--color-bruma, #EDE7DA); transition: background-color 300ms cubic-bezier(0.16,1,0.3,1), color 300ms cubic-bezier(0.16,1,0.3,1); } .ds-btn-light:hover .ds-btn-light__chip { background: var(--color-sol, #F0A93C); color: var(--color-noche, #0E1512); }"
+    },
+    {
+      "name": "Botón de contorno de día",
+      "kind": "button",
+      "refersTo": "button-outline-day",
+      "description": "Acción secundaria sobre la mitad clara. Borde de un píxel que vira a terracota.",
+      "html": "<a class=\"ds-btn-outline-day\" href=\"#\">Ver la galería<svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a>",
+      "css": ".ds-btn-outline-day { display: inline-flex; align-items: center; gap: 12px; background: transparent; color: var(--color-tinta, #241F19); border: 1px solid var(--color-arena-3, #DACEB6); font-family: Inter, system-ui, sans-serif; font-size: 0.95rem; font-weight: 500; text-decoration: none; border-radius: 9999px; padding: 12px 24px; transition: color 150ms cubic-bezier(0.16,1,0.3,1), border-color 150ms cubic-bezier(0.16,1,0.3,1), background-color 150ms cubic-bezier(0.16,1,0.3,1), scale 150ms cubic-bezier(0.16,1,0.3,1); } .ds-btn-outline-day:hover { color: var(--color-tierra, #A8511F); border-color: var(--color-tierra, #A8511F); background: var(--color-arena-2, #EBE3D3); } .ds-btn-outline-day:active { scale: 0.97; } .ds-btn-outline-day svg { transition: translate 200ms cubic-bezier(0.16,1,0.3,1); } .ds-btn-outline-day:hover svg { translate: 4px 0; }"
+    },
+    {
+      "name": "Botón flotante de WhatsApp",
+      "kind": "button",
+      "refersTo": "button-whatsapp",
+      "description": "El único elemento del sistema pintado con un color que no salió de la propiedad. Lleva un halo latiendo.",
+      "html": "<a class=\"ds-fab-whatsapp\" href=\"#\" aria-label=\"Escribir por WhatsApp\"><span class=\"ds-fab-whatsapp__halo\"></span><svg viewBox=\"0 0 24 24\" width=\"26\" height=\"26\" fill=\"currentColor\"><path d=\"M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2m5.8 14.16c-.25.69-1.44 1.32-1.98 1.36-.53.05-1.02.24-3.45-.72-2.9-1.14-4.74-4.11-4.88-4.3-.14-.19-1.16-1.55-1.16-2.95s.73-2.1 1-2.38c.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.65.49.24.57.81 1.97.88 2.11.07.14.12.31.02.5-.09.19-.14.31-.28.47-.14.17-.3.37-.42.5-.14.14-.29.29-.12.57.16.28.73 1.2 1.56 1.94 1.07.96 1.98 1.25 2.26 1.39.28.14.45.12.61-.07.17-.19.71-.83.9-1.11.19-.29.38-.24.64-.14.26.09 1.65.78 1.93.92.28.14.47.21.54.33.07.11.07.66-.18 1.35\"/></svg></a>",
+      "css": ".ds-fab-whatsapp { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 9999px; background: var(--color-whatsapp, #25D366); color: #FFFFFF; box-shadow: 0 8px 20px rgba(0,0,0,0.40), 0 32px 70px rgba(0,0,0,0.55); transition: background-color 500ms cubic-bezier(0.16,1,0.3,1), scale 150ms cubic-bezier(0.16,1,0.3,1); } .ds-fab-whatsapp:hover { background: var(--color-whatsapp-hover, #34E27A); } .ds-fab-whatsapp:active { scale: 0.97; } .ds-fab-whatsapp__halo { position: absolute; inset: 0; border-radius: 9999px; background: var(--color-whatsapp, #25D366); animation: ds-latido 2.4s ease-out infinite; } @keyframes ds-latido { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.5); opacity: 0; } }"
+    },
+    {
+      "name": "Tarjeta de noche",
+      "kind": "card",
+      "refersTo": "card-night",
+      "description": "Superficie elevada sobre la mitad oscura. Sin sombra: sube un escalón de tono y se cierra con filete.",
+      "html": "<div class=\"ds-card-night\"><p class=\"ds-card-night__label\">En auto</p><h3 class=\"ds-card-night__title\">1 h 15 desde Lima</h3><p class=\"ds-card-night__body\">Km 86 de la Panamericana Sur, a la altura de Mala.</p></div>",
+      "css": ".ds-card-night { background: var(--color-bosque, #16211B); border: 1px solid var(--color-filete, #2A3A31); border-radius: 16px; padding: 28px; max-width: 340px; } .ds-card-night__label { font-family: Archivo, 'Arial Black', sans-serif; font-variation-settings: 'wdth' 62, 'wght' 600; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-sol, #F0A93C); margin: 0 0 12px; } .ds-card-night__title { font-family: Archivo, 'Arial Black', sans-serif; font-variation-settings: 'wdth' 112, 'wght' 700; font-size: 1.5rem; line-height: 1.12; letter-spacing: -0.02em; color: var(--color-bruma, #EDE7DA); margin: 0; } .ds-card-night__body { font-family: Inter, system-ui, sans-serif; font-size: 1.02rem; line-height: 1.625; color: var(--color-bruma-2, #A8A79B); margin: 12px 0 0; }"
+    },
+    {
+      "name": "Etiqueta flotante sobre foto",
+      "kind": "chip",
+      "refersTo": "chip-overlay",
+      "description": "Señala un elemento dentro de la fotografía del hero. Punto ámbar con halo, píldora traslúcida con desenfoque.",
+      "html": "<span class=\"ds-chip-overlay\"><span class=\"ds-chip-overlay__dot\"></span><span class=\"ds-chip-overlay__text\">Piscina incluida</span></span>",
+      "css": ".ds-chip-overlay { display: inline-flex; align-items: center; gap: 8px; } .ds-chip-overlay__dot { width: 6px; height: 6px; border-radius: 9999px; background: var(--color-sol, #F0A93C); box-shadow: 0 0 12px 2px rgba(240,169,60,0.6); } .ds-chip-overlay__text { font-family: Inter, system-ui, sans-serif; font-size: 0.78rem; font-weight: 500; color: var(--color-bruma, #EDE7DA); background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.15); border-radius: 9999px; padding: 6px 14px; backdrop-filter: blur(12px); }"
+    },
+    {
+      "name": "Dato encapsulado",
+      "kind": "chip",
+      "refersTo": "chip-overlay",
+      "description": "Cifra de capacidad sobre la mitad clara. Borde de un píxel, ícono en terracota.",
+      "html": "<p class=\"ds-chip-dato\"><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0 8 4 4 0 0 0 0-8M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75\"/></svg>Hasta <strong>20 personas</strong> con las tres</p>",
+      "css": ".ds-chip-dato { display: inline-flex; align-items: center; gap: 10px; font-family: Inter, system-ui, sans-serif; font-size: 0.9rem; color: var(--color-tinta-2, #5C554B); border: 1px solid var(--color-arena-3, #DACEB6); border-radius: 9999px; padding: 10px 20px; margin: 0; } .ds-chip-dato svg { color: var(--color-tierra, #A8511F); flex-shrink: 0; } .ds-chip-dato strong { color: var(--color-tinta, #241F19); font-weight: 600; }"
+    },
+    {
+      "name": "Barra de navegación (piel de noche)",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Fija arriba. Transparente sobre el hero, sólida al hacer scroll, y cambia de piel según la mitad de la página.",
+      "html": "<header class=\"ds-nav\"><a class=\"ds-nav__mark\" href=\"#\">Sol de Bambú</a><nav class=\"ds-nav__links\"><a href=\"#\">La cabaña</a><a href=\"#\">Galería</a><a href=\"#\">El atardecer</a><a href=\"#\">Cómo llegar</a></nav></header>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; gap: 32px; height: 72px; padding: 0 32px; background: rgba(14,21,18,0.8); border-bottom: 1px solid var(--color-filete, #2A3A31); backdrop-filter: blur(16px); transition: background-color 500ms cubic-bezier(0.16,1,0.3,1); } .ds-nav__mark { font-family: Archivo, 'Arial Black', sans-serif; font-variation-settings: 'wdth' 118, 'wght' 800; font-size: 1.05rem; line-height: 1; letter-spacing: -0.02em; color: var(--color-bruma, #EDE7DA); text-decoration: none; } .ds-nav__links { display: flex; align-items: center; gap: 32px; } .ds-nav__links a { font-family: Inter, system-ui, sans-serif; font-size: 0.86rem; font-weight: 500; color: var(--color-bruma-2, #A8A79B); text-decoration: none; transition: color 150ms cubic-bezier(0.16,1,0.3,1); } .ds-nav__links a:hover { color: var(--color-bruma, #EDE7DA); } .ds-nav__links a:focus-visible { outline: 2px solid var(--color-sol, #F0A93C); outline-offset: 3px; border-radius: 4px; }"
+    },
+    {
+      "name": "Collage en rombos",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "El gesto formal que firma el sistema. Grilla 2×2 rotada 45°, con cada foto contra-rotada y escalada 1.42 para quedar derecha dentro de su rombo. Solo desde 1024px.",
+      "html": "<div class=\"ds-rombos\"><div class=\"ds-rombos__celda\"><div class=\"ds-rombos__foto\" style=\"background:linear-gradient(135deg,#1F2E26,#7E9B6B)\"></div></div><div class=\"ds-rombos__celda\"><div class=\"ds-rombos__foto\" style=\"background:linear-gradient(135deg,#A8511F,#F0A93C)\"></div></div><div class=\"ds-rombos__celda\"><div class=\"ds-rombos__foto\" style=\"background:linear-gradient(135deg,#DACEB6,#F4EFE3)\"></div></div><div class=\"ds-rombos__celda\"><div class=\"ds-rombos__foto\" style=\"background:linear-gradient(135deg,#16211B,#2A3A31)\"></div></div></div>",
+      "css": ".ds-rombos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 300px; rotate: 45deg; margin: 90px auto; } .ds-rombos__celda { overflow: hidden; border-radius: 24px; box-shadow: 0 8px 20px rgba(0,0,0,0.40), 0 32px 70px rgba(0,0,0,0.55); aspect-ratio: 1; } .ds-rombos__foto { width: 100%; height: 100%; rotate: -45deg; scale: 1.42; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "El día que cae",
+    "overview": "La página no es un sitio oscuro. Es un día que transcurre. Arriba está el valle a pleno sol sobre fondo arena, con las fotos tal como son de verdad; la secuencia del atardecer hace de bisagra a mitad de recorrido; y la segunda mitad ya es de noche, sobre un verde bambú tan profundo que lee como negro. El scroll no es navegación, es el paso de las horas. Cualquier elemento nuevo tiene que responder una pregunta antes que ninguna otra: ¿a qué hora ocurre? Esa respuesta decide su fondo, su color de texto y su acento, y no hay una tercera opción.\n\nEl registro es cinematográfico y reposado. Fotos grandes que respiran, silencio alrededor del texto, sombras profundas y un grano finísimo encima de cada imagen a sangre. Se parece más al tráiler de un lugar que al aviso de un alojamiento: nada grita, nada parpadea, nada apura. La densidad es baja a propósito — ciento veintiocho píxeles de aire entre secciones en pantalla grande — porque lo que se vende es espacio, y una página apretada contradice cinco mil metros cuadrados.\n\nLos seis colores no salieron de un generador de paletas: están muestreados de la propiedad. El verde del techo y del bambú, la terracota del OSB, el ámbar del atardecer que la reseña de Jeri menciona por escrito. Esa procedencia es la razón por la que el sistema no se puede confundir con otro: son los colores de este lugar y de ningún otro.",
+    "keyCharacteristics": [
+      "Dos mitades cromáticas con una bisagra narrativa, nunca mezcladas",
+      "Una sola familia tipográfica en tres anchos distintos: una voz, tres registros",
+      "Un único color de acción, que cambia de pigmento según la hora",
+      "Superficies planas separadas por tono; la sombra queda para lo que flota fuera del flujo",
+      "Fotografía real y a sangre, con grano; sin ilustración, sin stock, sin mockups"
+    ],
+    "rules": [
+      {
+        "name": "La Regla de la Hora",
+        "body": "Cada sección pertenece al día o a la noche, nunca a las dos. Un fondo arena obliga a texto tinta y acento terracota; un fondo noche obliga a texto bruma y acento ámbar. Mezclar un token de una mitad dentro de la otra es el error más grave que se puede cometer en este sistema.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla de la Voz Única",
+        "body": "Solo hay un color de acción por mitad — ámbar de noche, terracota de día — y solo lo llevan los elementos que se pueden accionar. Nada decorativo se pinta con el acento. Si dos cosas en pantalla llevan el color de acción, una de las dos está mal.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla del Verde",
+        "body": "El fondo oscuro es verde, no negro. Negro puro con un acento brillante es el default de cualquier landing oscura; este verde solo puede ser de este lugar. Ningún #000 como fondo, nunca.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla del Eje",
+        "body": "Cuando algo necesita más presencia, se ensancha antes que agrandarse. El eje wdth de Archivo es la herramienta de jerarquía de este sistema; el font-size es la segunda opción, no la primera.",
+        "section": "typography"
+      },
+      {
+        "name": "La Regla del Sobretítulo",
+        "body": "Todo titular de sección va precedido de una etiqueta condensada en versalitas y en el color de acento de esa mitad. Es el elemento que marca dónde empieza cada capítulo del día.",
+        "section": "typography"
+      },
+      {
+        "name": "La Regla del Rombo que no Encoge",
+        "body": "Los collages rotados 45° existen solo desde 1024px. En 375px un rombo desperdicia la mitad del ancho y recorta lo que importa de cada foto, así que ahí las fotos se quedan derechas. Un tratamiento geométrico se apaga antes que miniaturizarse.",
+        "section": "layout"
+      },
+      {
+        "name": "La Regla de la Sombra Fotográfica",
+        "body": "La sombra marca lo que está fuera del plano de la página: la fotografía y el botón flotante, que vive por encima de todo. Todo lo que está *dentro* del flujo — tarjetas, acordeones, contenedores — se separa por tono y por filete, nunca por sombra. Una tarjeta con sombra en este sistema está mal.",
+        "section": "elevation"
+      },
+      {
+        "name": "La Regla de los Dos Radios",
+        "body": "Píldora completa si se acciona, 16px si contiene. No hay radios intermedios: un rounded-lg en este sistema es una señal de que alguien no leyó esta regla.",
+        "section": "shapes"
+      },
+      {
+        "name": "La Regla del Reposo Visible",
+        "body": "El estado natural de cualquier elemento es \"se ve\". Ninguna animación puede ser lo que hace visible un contenido: si no llega a correr, el contenido igual tiene que estar ahí. Por eso las apariciones usan backwards y no both, y por eso el CTA del hero entra por CSS y no por JavaScript.",
+        "section": "components"
+      },
+      {
+        "name": "La Regla de la Profundidad",
+        "body": "El movimiento de esta página es profundidad, no deslizamiento. Antes de animar algo que sube, preguntá si lo que corresponde es que se acerque. La entrada genérica de sección se mantiene discreta a propósito para no competir con los dos gestos que sí tienen autoría: el paralaje del hero y la respiración de la fotografía.",
+        "section": "components"
+      },
+      {
+        "name": "La Regla del Nombre en el Fondo",
+        "body": "El lugar se llama Sol de Bambú: el sol y el bambú viven en el fondo de la página, no solo en las fotos. La mitad de día lleva cañas en los márgenes y un sol que cae con el scroll; la de noche, estrellas. En celular la escena se simplifica en vez de comprimirse.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla del Recorte",
+        "body": "Nada que tenga una animacion atada al scroll puede vivir dentro de un ancestro con overflow: hidden. Ese overflow convierte al elemento en contenedor de scroll y el timeline se ata a una caja que no se desplaza, asi que la animacion nunca avanza. Para recortar se usa clip-path, que recorta igual y no crea contenedor de scroll.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do decidir primero a qué mitad del día pertenece lo que estás construyendo, y tomar los seis tokens de esa mitad en bloque.",
+      "Do usar el eje wdth de Archivo para crear jerarquía antes de tocar el tamaño.",
+      "Do poner un sobretítulo condensado en versalitas y en el acento de la mitad antes de cada titular de sección.",
+      "Do dar active:scale(0.97) a todo lo que se pueda presionar, y transiciones de 150 a 300ms sobre --ease-suave.",
+      "Do apagar por completo un tratamiento geométrico por debajo de 1024px en lugar de encogerlo.",
+      "Do mantener los 96/128px de aire entre secciones aunque la página se haga larga."
+    ],
+    "donts": [
+      "Don't usar #000 como fondo, ni blanco puro como texto. El fondo es verde bambú y los blancos son cálidos.",
+      "Don't mezclar tokens de la mitad de día con los de la mitad de noche en una misma sección.",
+      "Don't poner sombra a nada que esté dentro del flujo de la página. La sombra es de la fotografía y del botón flotante.",
+      "Don't usar el color de acento en elementos decorativos: es exclusivo de lo accionable, y solo hay uno por mitad.",
+      "Don't introducir radios intermedios. Píldora completa o 16px.",
+      "Don't agregar una segunda familia tipográfica. Archivo ya tiene tres voces en su eje de ancho.",
+      "Don't hacer que un contenido dependa de una animación para ser visible.",
+      "Don't derivar hacia el default de landing oscura — negro puro con acento fluorescente — ni hacia el lenguaje de producto SaaS: degradados violeta, ilustración isométrica, mockups flotando o grillas de \"features\" con íconos genéricos. Ambos fueron rechazados explícitamente."
+    ]
+  }
+}

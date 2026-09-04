@@ -25,7 +25,7 @@ export function BotonWhatsApp() {
       aria-label="Escribir por WhatsApp"
       aria-hidden={!visible}
       tabIndex={visible ? 0 : -1}
-      className={`bg-whatsapp hover:bg-whatsapp-hover shadow-(--shadow-alta) fixed right-6 bottom-6 z-40 hidden h-14 w-14 items-center justify-center rounded-full text-white transition-all duration-500 ease-(--ease-suave) lg:flex ${
+      className={`pulsable bg-whatsapp hover:bg-whatsapp-hover shadow-(--shadow-alta) fixed right-6 bottom-6 z-40 hidden h-14 w-14 items-center justify-center rounded-full text-white transition-[opacity,transform,background-color] duration-500 ease-(--ease-suave) lg:flex ${
         visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0'
       }`}
     >

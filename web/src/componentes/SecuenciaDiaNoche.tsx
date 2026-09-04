@@ -18,8 +18,8 @@ export function SecuenciaDiaNoche() {
   const lienzo = useRef<HTMLCanvasElement>(null);
   const imagenes = useRef<HTMLImageElement[]>([]);
   const ultimo = useRef(-1);
+  const progresoVisual = useRef<HTMLDivElement>(null);
   const [listo, setListo] = useState(false);
-  const [progreso, setProgreso] = useState(0);
 
   useEffect(() => {
     const canvas = lienzo.current;
@@ -36,8 +36,23 @@ export function SecuenciaDiaNoche() {
     if (!ctx) return;
 
     const dibujar = (i: number) => {
-      const img = imagenes.current[i];
-      if (!img?.complete || img.naturalWidth === 0) return;
+      const exacta: HTMLImageElement | undefined = imagenes.current[i];
+      const servible = (c?: HTMLImageElement) => !!c?.complete && c.naturalWidth > 0;
+      let img: HTMLImageElement | undefined = exacta;
+      // Si el cuadro exacto todavía no llegó se pinta el más cercano que sí
+      // esté, mirando hacia atrás y TAMBIÉN hacia adelante: los cuadros se
+      // descargan en paralelo y no terminan en orden, así que buscar solo
+      // hacia atrás dejaba sin nada a quien entraba por el principio de la
+      // sección con los cuadros del final ya listos — y un lienzo opaco sin
+      // dibujar no es un hueco, es un rectángulo negro a pantalla completa.
+      if (!servible(img)) {
+        img = undefined;
+        for (let d = 1; d < imagenes.current.length && !img; d++) {
+          if (servible(imagenes.current[i - d])) img = imagenes.current[i - d];
+          else if (servible(imagenes.current[i + d])) img = imagenes.current[i + d];
+        }
+      }
+      if (!img) return false;
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const w = canvas.clientWidth;
       const h = canvas.clientHeight;
@@ -46,39 +61,94 @@ export function SecuenciaDiaNoche() {
         canvas.height = Math.round(h * dpr);
       }
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      // Va acá y no al crear el contexto: asignar `canvas.width` reinicia TODO
+      // el estado del contexto —transformación, suavizado, estilos—, así que
+      // puesto una sola vez al montar se perdía en el primer dibujo. El cuadro
+      // es de 1280 y el lienzo puede medir el doble en una pantalla retina, o
+      // sea que casi siempre se amplía; Chrome interpola en calidad baja por
+      // defecto y sobre una toma fotográfica ampliada eso se ve como lo que
+      // es: blando.
+      ctx.imageSmoothingQuality = 'high';
       // Equivalente a object-fit: cover, hecho a mano porque el canvas no lo trae.
       const escala = Math.max(w / img.naturalWidth, h / img.naturalHeight);
       const dw = img.naturalWidth * escala;
       const dh = img.naturalHeight * escala;
       ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
-      ultimo.current = i;
+      // El candado se cierra solo si se pintó el cuadro PEDIDO. Con un
+      // sustituto en pantalla queda abierto a propósito, para que el siguiente
+      // pintado vuelva a intentarlo.
+      ultimo.current = img === exacta ? i : -1;
+      return true;
     };
 
-    // Precarga. El primero se dibuja apenas llega para que la sección nunca se
-    // vea vacía; el resto entran mientras la persona lee lo de arriba.
-    let cargados = 0;
-    for (let i = 0; i < total; i++) {
+    // Precarga diferida. Los cuadros son 650 KB en celular y esta sección está
+    // cuatro pantallas más abajo: traerlos al montar es quitarle ancho de banda
+    // al hero, que es lo único que la persona está mirando en ese momento. En
+    // 4G desde Instagram esa competencia se ve — la piscina aparece tarde.
+    //
+    // Toda la secuencia espera a que falten dos pantallas para llegar acá. El
+    // primer cuadro de escritorio pesa cerca de 100 KB: pedirlo desde el hero
+    // competía directamente con el LCP sin aportar nada visible.
+    let procesados = 0;
+
+    const cargar = (i: number) => {
+      if (imagenes.current[i]) return;
       const img = new Image();
       img.decoding = 'async';
       img.src = cuadro(juego, i);
-      img.onload = () => {
-        cargados++;
-        if (i === 0 || cargados === total) {
-          setListo(true);
-          calcular();
-        }
+      // Cada cuadro que llega repinta: si solo repintaran el primero y el
+      // último, quien estuviera quieto se quedaría con un sustituto congelado
+      // mientras los de en medio van llegando.
+      const terminar = () => {
+        procesados++;
+        // Solo repinta si hay algo que ganar: `ultimo` en -1 significa que en
+        // pantalla hay un sustituto esperando al cuadro bueno. Con el cuadro
+        // exacto ya puesto, los que sigan llegando no cambian nada de lo que
+        // se ve, y cada repintado de más cuesta un recálculo de estilo.
+        if (ultimo.current === -1 || ultimo.current === i) calcular();
       };
+      img.onload = terminar;
+      img.onerror = terminar;
       imagenes.current[i] = img;
-    }
+    };
+
+    let restoPedido = false;
+    const cargarSecuencia = () => {
+      for (let i = 0; i < total; i++) cargar(i);
+    };
+
+    // Segunda vía de entrada para saltos por ancla y scroll programático. La
+    // descarga ocurre por proximidad, nunca porque pasó un temporizador.
+    const observador = new IntersectionObserver(
+      ([entrada]) => {
+        if (!entrada.isIntersecting || restoPedido) return;
+        restoPedido = true;
+        cargarSecuencia();
+        observador.disconnect();
+      },
+      {rootMargin: '200% 0px'},
+    );
+    observador.observe(el);
 
     function calcular() {
       const rect = el!.getBoundingClientRect();
+
+      // Vía alternativa a dos pantallas de distancia. Mantener el evento de
+      // scroll junto al observador cubre navegadores y estados suspendidos sin
+      // descargar la secuencia cuando nadie se acerca.
+      if (!restoPedido && rect.top < window.innerHeight * 2) {
+        restoPedido = true;
+        cargarSecuencia();
+      }
+
       const recorrido = el!.offsetHeight - window.innerHeight;
       if (recorrido <= 0) return;
       const avance = Math.min(1, Math.max(0, -rect.top / recorrido));
       const i = quieto ? total - 1 : Math.min(total - 1, Math.round(avance * (total - 1)));
-      setProgreso(avance);
-      if (i !== ultimo.current) dibujar(i);
+      progresoVisual.current?.style.setProperty('transform', `scaleX(${avance})`);
+      // El lienzo se destapa cuando hay algo PINTADO, no cuando hay algo
+      // descargado: es opaco, y enseñarlo vacío sería un rectángulo negro.
+      if (i !== ultimo.current && dibujar(i)) setListo(true);
     }
 
     // Sin requestAnimationFrame a propósito: el latch que evita encolar dos
@@ -88,6 +158,7 @@ export function SecuenciaDiaNoche() {
     if (!quieto) window.addEventListener('scroll', calcular, {passive: true});
     window.addEventListener('resize', calcular);
     return () => {
+      observador.disconnect();
       window.removeEventListener('scroll', calcular);
       window.removeEventListener('resize', calcular);
     };
@@ -97,7 +168,14 @@ export function SecuenciaDiaNoche() {
     <section
       ref={seccion}
       id="atardecer"
-      className="relative h-[260svh] motion-reduce:h-[100svh]"
+      // `fondo-hora` y no `bg-cielo`: el fondo propio de esta sección solo se ve
+      // por las costuras —una fracción de píxel entre el lienzo pegajoso y lo
+      // que sigue, o la franja que asoma en un móvil cuando la barra del
+      // navegador aparece y `100svh` deja de medir la pantalla entera—. Con un
+      // celeste fijo, eso que asoma es una raya de día contra una página que ya
+      // es de noche; con el color de la hora, es exactamente el color que la
+      // página tiene en ese momento y la costura deja de existir.
+      className="fondo-hora relative h-[260svh] motion-reduce:h-[100svh]"
       aria-label="El atardecer en Sol de Bambú, del mediodía a la noche"
     >
       <div className="sticky top-0 h-[100svh] overflow-hidden">
@@ -112,22 +190,42 @@ export function SecuenciaDiaNoche() {
           }`}
         />
 
-        {/* Grano: mata el banding del cielo degradado, que en un WebP
-            comprimido y a pantalla completa se nota mucho. */}
+        {/* Aquí iban los dos velos que cosían la sección con lo de arriba y lo
+            de abajo: un degradado del color de la hora sobre el 46% superior de
+            la pantalla y `disuelve-noche` sobre el 38-42% inferior. Los dos
+            estaban puestos sobre el LIENZO PEGAJOSO, no sobre las costuras, así
+            que no velaban un borde: velaban ocho décimas de la fotografía
+            durante todo el recorrido, siempre, y la toma —que es el corazón de
+            la página— se veía lavada por arriba y por abajo. Fuera los dos: la
+            imagen va a sangre y limpia de punta a punta.
+
+            Lo que se paga es el corte al entrar y al salir. No se nota: arriba
+            la galería ya es del color de la hora y el primer cuadro es el mismo
+            mediodía; abajo el último cuadro es noche cerrada y la fogata
+            arranca en `bg-noche`, el mismo azul. Los dos lados de cada costura
+            son el mismo color, que es lo único que los velos estaban
+            comprando. */}
+
+        {/* Grano: mata el banding del cielo, que en un WebP comprimido y a
+            pantalla completa se nota mucho. No es un velo —es una película al
+            5%, la misma que llevan todas las secciones vecinas como `::after`—
+            y por eso se queda: sin ella el degradado del cielo se escalona en
+            bandas, que es justo lo contrario de limpio. */}
         <div className="textura-grano pointer-events-none absolute inset-0" />
 
-        {/* Los bordes que cosen la sección con lo que viene antes y después:
-            arriba se funde con el día, abajo con la noche. */}
-        <div className="from-arena pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b to-transparent" />
-        <div className="from-noche pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t to-transparent" />
-
+        {/* `sombra-legible` en vez del velo que ya no está: es la misma
+            respuesta que el pie del hero le dio al mismo problema. Sin el velo,
+            la cita cae sobre el pasto a pleno sol en los primeros cuadros y el
+            crema contra el verde no se lee. La sombra viaja pegada a las
+            letras, mide unos píxeles y no oscurece ni un centímetro de la
+            fotografía. */}
         <div // pb-32 en móvil: la barra fija de reservar mide unos 76px.
-          className="relative mx-auto flex h-full max-w-6xl flex-col justify-end px-5 pb-32 sm:px-8 lg:pb-24">
+          className="sombra-legible relative mx-auto flex h-full max-w-6xl flex-col justify-end px-5 pb-32 sm:px-8 lg:pb-24">
           <figure className="max-w-2xl">
-            <blockquote className="text-bruma text-[1.5rem] leading-[1.2] sm:text-[2.2rem] md:text-[2.7rem]">
+            <blockquote className="titular text-crema">
               «Una ubicación precisa para maravillarte del atardecer.»
             </blockquote>
-            <figcaption className="text-bruma-2 mt-5 text-[0.9rem]">
+            <figcaption className="text-crema/70 mt-5 text-[0.95rem]">
               Jeri Rodríguez, en una reseña de Google
             </figcaption>
           </figure>
@@ -135,16 +233,16 @@ export function SecuenciaDiaNoche() {
           {/* Barra de avance: le dice a la persona que el scroll está moviendo
               la imagen, no que la página se trabó. */}
           <div
-            className="mt-10 h-px w-full max-w-xs bg-white/20"
+            className="mt-10 h-px w-full max-w-xs bg-white/30"
             role="presentation"
             aria-hidden="true"
           >
             <div
-              className="bg-sol h-px transition-none"
-              style={{width: `${Math.round(progreso * 100)}%`}}
+              ref={progresoVisual}
+              className="bg-sol h-px w-full origin-left scale-x-0 transition-none"
             />
           </div>
-          <p className="condensada text-bruma-2 mt-3 text-[0.66rem]">
+          <p className="mono text-crema/75 mt-3 text-[0.72rem]">
             Del mediodía a la noche · sigue bajando
           </p>
         </div>
